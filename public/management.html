@@ -3,26 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hyperloop Infrastructure</title>
-    <link rel="shorcut icon" type="image/x-icon" href="images/hyperloop.ico">
+    <title>Hyperloop Infrastructure Management</title>
     <link rel="stylesheet" href="stylesheets/management.css">
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <ul class="tabs">
-                <li><a href="menu.html">Main Menu</a></li>
-                <li><a href="route.html">Route Catalogue</a></li>
-                <li><a href="management.html">Management</a></li>
-                <li><a href="reports.html">Reports</a></li>
+                <li><a href="route.html">ROUTE CATALOGUE</a></li>
+                <li><a href="management.html">MANAGEMENT</a></li>
+                <li><a href="reports.html">REPORTS</a></li>
+                <li class="menu_button"><a href="menu.html">MAIN MENU</a></li>
             </ul>
         </div>
         <div class="main-content">
             <div class="welcome-box">
                 <h1>Management</h1>
-                <p>Here is the management of our system</p>
+            </div>
+            <div>
+                <h2>Create New Route</h2>
+                <form id="add-route-form">
+                    <input type="number" id="route-id" placeholder="Route ID" required>
+                    <input type="text" id="route-name" placeholder="Route Name" required>
+                    <input type="number" id="start-station-id" placeholder="Start Station ID" required>
+                    <input type="number" id="end-station-id" placeholder="End Station ID" required>
+                    <button type="submit">Add Route</button>
+                </form>
+            </div>
+            <div>
+                <h2>Delete Route</h2>
+                <form id="delete-route-form">
+                    <input type="number" id="delete-route-id" placeholder="Route ID" required>
+                    <button type="submit">Delete Route</button>
+                </form>
+            </div>
+            <div>
+                <h2>Assign Capsule to Route</h2>
+                <form id="assign-capsule-form">
+                    <input type="number" id="assign-route-id" placeholder="Route ID" required>
+                    <input type="number" id="capsule-id" placeholder="Capsule ID" required>
+                    <button type="submit">Assign Capsule</button>
+                </form>
             </div>
         </div>
     </div>
+    <script src="management.js"></script>
 </body>
 </html>

@@ -1,34 +1,63 @@
-
-
-const express = require("express");
-const http = require("http");
-const socketIO = require("socket.io");
-const path = require("path");
-const { getAllRoutes } = require('./connect_database');
+const express = require('express');
+const bodyParser = require('body-parser');
+const { getAllRoutes, addRoute, deleteRoute } = require('./connect_database');
 
 const app = express();
-const server = http.createServer(app);
-const io = socketIO(server);
+const port = 4000;
 
-app.use(express.static(path.resolve(__dirname, "../public")));
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.static('public'));
 
-app.get("/", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../public/menu.html"));
-});
-
-app.get("/routes", (req, res) => {
+app.get('/routes', (req, res) => {
     getAllRoutes((err, routes) => {
         if (err) {
-            console.error('Error getting routes:', err);
-            res.status(500).json({ error: 'Failed to fetch routes' });
+            console.error('Error fetching routes:', err);
+            res.status(500).json({ error: 'Error fetching routes' });
         } else {
             res.json(routes);
         }
     });
 });
 
-const PORT = 4000;
-server.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.delete('/routes/:routeId', (req, res) => {
+    const routeId = req.params.routeId;
+    deleteRoute(routeId, (err, result) => {
+        if (err) {
+            console.error('Error deleting route:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json({ message: 'Route deleted successfully' });
+        }
+    });
+});
+
+
+app.post('/routes', (req, res) => {
+    const { routeId, name, startStationId, endStationId} = req.body;
+
+    addRoute(routeId, name, startStationId, endStationId, (err, result) => {
+        if (err) {
+            console.error('Error adding route:', err);
+            res.status(500).json({ error: 'Error adding route' });
+        } else {
+            res.json({ message: 'Route added successfully' });
+        }
+    });
+});
+
+app.post('/update-infrastructure', (req, res) => {
+    const { elementId, newState } = req.body;
+    updateInfrastructureState(elementId, newState, (err, result) => {
+        if (err) {
+            console.error('Error updating infrastructure state:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json({ message: 'Infrastructure state updated successfully' });
+        }
+    });
+});
+
+
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
 });
