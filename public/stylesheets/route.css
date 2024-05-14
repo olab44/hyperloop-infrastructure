@@ -62,3 +62,17 @@ body {
 .routetabs li a:hover {
     background-color: #ccc;
 }
+
+.main-content {
+    flex: 3;
+    padding: 20px;
+}
+
+#route-catalogue {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.route {
+    margin-bottom: 10px;
+}

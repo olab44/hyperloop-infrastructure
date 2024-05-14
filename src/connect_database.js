@@ -17,6 +17,27 @@ function connect() {
   return db;
 }
 
+function getAllRoutes(callback) {
+  const db = connect();
+
+  const query = 'SELECT * FROM ROUTE'
+
+  db.query(query, (err, results) => {
+      if (err) {
+          console.error('Error retrieving data from routes table:', err);
+          callback(err, null);
+      } else {
+          callback(null, results);
+      }
+
+      db.end();
+  });
+}
+
+module.exports = {getAllRoutes};
 
 
-connect();
+
+// getAllRoutes((err, routes) => {
+//       console.log('Routes data:', routes);
+// });
