@@ -74,6 +74,33 @@ function updateInfrastructureState(elementId, newState) {
     });
 }
 
+function updateInfrastructureState() {
+    const elementId = document.getElementById('element-id').value;
+    const newState = document.getElementById('new-state').value;
+
+    fetch('/update-infrastructure', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ elementId, newState })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Infrastructure state updated successfully');
+        fetchAndDisplayInfrastructureElements();
+    })
+    .catch(error => {
+        console.error('Error updating infrastructure state:', error);
+    });
+}
+
+
+document.getElementById('update-state-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    updateInfrastructureState();
+});
+
 
 document.getElementById('add-route-form').addEventListener('submit', function(e) {
     e.preventDefault();
