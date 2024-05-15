@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hyperloop Infrastructure</title>
-    <link rel="stylesheet" href="stylesheets/route.css">
+    <link rel="stylesheet" href="stylesheets/basic_design.css">
+    <link rel="stylesheet" href="stylesheets/catalogue.css">
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <ul class="tabs">
-                <li><a href="route.html">ROUTE CATALOGUE</a></li>
+                <li><a href="catalogue.html">ROUTE CATALOGUE</a></li>
                 <li><a href="management.html">MANAGEMENT</a></li>
                 <li><a href="reports.html">REPORTS</a></li>
                 <li class="menu_button"><a href="menu.html">MAIN MENU</a></li>
@@ -18,11 +19,14 @@
         </div>
         <div class="main-content">
             <div class="welcome-box">
-                <h1>Route Catalogue</h1>
+                <h1>ROUTE CATALOGUE</h1>
             </div>
-            <div id="route-catalogue"></div>
+            <div class="catalogue">
+                <ul id="route-catalogue"></ul>
+                <div class="filters-menu"></div>
+            </div>
         </div>
     </div>
-    <script src="routes.js"></script>
+    <script src="scripts/routes.js"></script>
 </body>
 </html>

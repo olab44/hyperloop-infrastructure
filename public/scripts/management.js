@@ -16,9 +16,7 @@ function addRoute() {
         alert('Route added successfully');
         fetchAndDisplayRoutes();
     })
-    .catch(error => {
-        console.error('Error adding route:', error);
-    });
+    .catch(error => {console.error('Error adding route:', error);});
 }
 
 function deleteRoute() {

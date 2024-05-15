@@ -1,7 +1,7 @@
 # jak uruchomić?
 
-- npm init -y
-- npm install socket.io
 - npm install express
+- npm install mysql2
+
 - node src/app.js
 

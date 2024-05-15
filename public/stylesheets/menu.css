@@ -5,57 +5,9 @@ img {
     width: 80%;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-.container {
-    display: flex;
-    height: 100vh;
-}
-.sidebar {
-    width: 30vh;
-    background-color: #222222;
-    border: solid black;
-    border-width: 5px 5px 5px 0px;
-    padding: 20px;
-}
 .main-content {
     background: url(../images/Hyperloop_capsule.png) center;
-    flex: 1;
 }
 .welcome-box {
-    background-color: #222222;
-    border: solid black;
-    border-width: 5px 5px 5px 0px;
-}
-.tabs {
-    position: relative;
-    height: 100%;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-.tabs li {
-    width: 100%;
-    margin-bottom: 15px;
-}
-.tabs li.menu_button {
-    position: absolute;
-    bottom: 0;
-}
-.tabs li a {
-    text-decoration: none;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #222222;
-    display: block;
-    padding: 10px;
-    background-color: #ddd;
-    border: solid 3px black;
-    border-radius: 5px;
-}
-.tabs li a:hover {
-    background-color: #ccc;
+    background-image: linear-gradient(#222, black);
 }

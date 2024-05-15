@@ -1,12 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require("path");
+
 const { getAllRoutes, addRoute, deleteRoute } = require('./connect_database');
 
 const app = express();
-const port = 4000;
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(path.resolve(__dirname, "../public")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../public/menu.html"));
+});
 
 app.get('/routes', (req, res) => {
     getAllRoutes((err, routes) => {
@@ -57,7 +62,7 @@ app.post('/update-infrastructure', (req, res) => {
     });
 });
 
-
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+const PORT = 4000;
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
 });

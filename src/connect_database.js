@@ -11,7 +11,7 @@ function connect() {
 
     db.connect((err) => {
         if (err) console.error('Error connecting to MySQL database:', err);
-        else console.log('Connected to MySQL database');
+        // else console.log('Connected to MySQL database');
     });
     return db;
 }
@@ -19,7 +19,10 @@ function connect() {
 function getAllRoutes(callback) {
     const db = connect();
 
-    const query = 'SELECT * FROM ROUTE';
+    const query = 'SELECT r.*,\
+                   CalculateRouteLength(r.ROUTE_ID) AS TOTAL_LENGTH,\
+                   CalculateRouteTime(r.ROUTE_ID) AS TOTAL_TIME\
+                   FROM ROUTE AS r';
 
     db.query(query, (err, results) => {
         if (err) {

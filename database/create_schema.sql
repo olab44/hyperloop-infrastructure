@@ -8,15 +8,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-
--- -----------------------------------------------------
--- Table .`ROUTE`
+-- Table `ROUTE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ROUTE` (
   `ROUTE_ID` INT NOT NULL,
@@ -26,7 +18,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`CAPSULE`
+-- Table `CAPSULE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `CAPSULE` (
   `CAPSULE_ID` INT NOT NULL,
@@ -37,7 +29,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`COUNTRY`
+-- Table `COUNTRY`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `COUNTRY` (
   `COUNTRY_ID` INT NOT NULL,
@@ -47,7 +39,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`ADDRESS`
+-- Table `ADDRESS`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ADDRESS` (
   `ADDRESS_ID` INT NOT NULL,
@@ -66,7 +58,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`STATION`
+-- Table `STATION`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `STATION` (
   `STATION_ID` INT NOT NULL,
@@ -82,7 +74,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`STRETCH`
+-- Table `STRETCH`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `STRETCH` (
   `STRETCH_ID` INT NOT NULL,
@@ -107,7 +99,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`ROUTE_STRETCH`
+-- Table `ROUTE_STRETCH`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ROUTE_STRETCH` (
   `ROUTE_ID` INT NOT NULL,
@@ -130,7 +122,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`PLATFORM`
+-- Table `PLATFORM`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `PLATFORM` (
   `PLATFORM_ID` INT NOT NULL,
@@ -149,7 +141,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`INFRASTRUCTURE_ELEMENT`
+-- Table `INFRASTRUCTURE_ELEMENT`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `INFRASTRUCTURE_ELEMENT` (
   `ELEMENT_ID` INT NOT NULL,
@@ -185,7 +177,7 @@ ALTER TABLE `INFRASTRUCTURE_ELEMENT`
 
 
 -- -----------------------------------------------------
--- Table .`MALFUNCTION`
+-- Table `MALFUNCTION`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `MALFUNCTION` (
   `MALFUNCTION_ID` INT NOT NULL,
@@ -204,7 +196,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table .`SERVICE`
+-- Table `SERVICE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `SERVICE` (
   `SERVICE_ID` INT NOT NULL,
@@ -241,7 +233,7 @@ ALTER TABLE `SERVICE`
 
 
 -- -----------------------------------------------------
--- Table .`ROUTE_CAPSULE`
+-- Table `ROUTE_CAPSULE`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ROUTE_CAPSULE` (
   `ROUTE_ID` INT NOT NULL,

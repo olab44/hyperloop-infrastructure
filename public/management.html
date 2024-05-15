@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hyperloop Infrastructure Management</title>
+    <link rel="stylesheet" href="stylesheets/basic_design.css">
     <link rel="stylesheet" href="stylesheets/management.css">
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <ul class="tabs">
-                <li><a href="route.html">ROUTE CATALOGUE</a></li>
+                <li><a href="catalogue.html">ROUTE CATALOGUE</a></li>
                 <li><a href="management.html">MANAGEMENT</a></li>
                 <li><a href="reports.html">REPORTS</a></li>
                 <li class="menu_button"><a href="menu.html">MAIN MENU</a></li>
@@ -18,15 +19,15 @@
         </div>
         <div class="main-content">
             <div class="welcome-box">
-                <h1>Management</h1>
+                <h1>MANAGEMENT</h1>
             </div>
             <div>
                 <h2>Create New Route</h2>
                 <form id="add-route-form">
                     <input type="number" id="route-id" placeholder="Route ID" required>
                     <input type="text" id="route-name" placeholder="Route Name" required>
-                    <input type="number" id="start-station-id" placeholder="Start Station ID" required>
-                    <input type="number" id="end-station-id" placeholder="End Station ID" required>
+                    <input type="number" id="start-station-id" placeholder="Start Station ID">
+                    <input type="number" id="end-station-id" placeholder="End Station ID">
                     <button type="submit">Add Route</button>
                 </form>
             </div>
@@ -55,6 +56,6 @@
             </div>
         </div>
     </div>
-    <script src="management.js"></script>
+    <script src="scripts/management.js"></script>
 </body>
 </html>
