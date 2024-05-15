@@ -50,17 +50,6 @@ app.post('/routes', (req, res) => {
     });
 });
 
-app.post('/update-infrastructure', (req, res) => {
-    const { elementId, newState } = req.body;
-    updateInfrastructureState(elementId, newState, (err, result) => {
-        if (err) {
-            console.error('Error updating infrastructure state:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        } else {
-            res.json({ message: 'Infrastructure state updated successfully' });
-        }
-    });
-});
 
 const PORT = 4000;
 app.listen(PORT, () => {

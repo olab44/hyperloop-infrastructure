@@ -53,25 +53,24 @@ function addRoute(routeId, name, callback) {
 }
 
 function deleteRoute(routeId, callback) {
-  const db = connect();
+    const db = connect();
+    const query = 'CALL DeleteRoute(?)';
+    db.query(query, [routeId], (err, results) => {
+        if (err) {
+            console.error('Error deleting route:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
 
-  const query = 'DELETE FROM ROUTE WHERE ROUTE_ID = ?';
-  db.query(query, [routeId], (err, results) => {
-      if (err) {
-          console.error('Error deleting route:', err);
-          callback(err, null);
-      } else {
-          callback(null, results);
-      }
-
-      db.end();
-  });
+        db.end();
+    });
 }
+
 
 function assignCapsule(routeId, capsuleId, callback) {
     const db = connect();
-
-    const query = 'INSERT INTO ROUTE_CAPSULE (ROUTE_ID, CAPSULE_ID) VALUES (?, ?)';
+    const query = 'CALL AssignCapsuleToRoute(?, ?)';
     db.query(query, [routeId, capsuleId], (err, results) => {
         if (err) {
             console.error('Error assigning capsule:', err);
@@ -84,27 +83,10 @@ function assignCapsule(routeId, capsuleId, callback) {
     });
 }
 
-function updateInfrastructureState(elementId, newState, callback) {
-  const db = connect();
-
-  const query = 'UPDATE INFRASTRUCTURE_ELEMENT SET STATE = ? WHERE ELEMENT_ID = ?';
-  db.query(query, [newState, elementId], (err, results) => {
-      if (err) {
-          console.error('Error updating infrastructure state:', err);
-          callback(err, null);
-      } else {
-          callback(null, results);
-      }
-
-      db.end();
-  });
-}
-
 
 module.exports = {
     getAllRoutes,
     addRoute,
     deleteRoute,
-    assignCapsule,
-    updateInfrastructureState
+    assignCapsule
 };

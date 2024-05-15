@@ -1,37 +1,25 @@
 DELIMITER //
 
--- Calculate total length [km] of the route
-CREATE FUNCTION IF NOT EXISTS CalculateRouteLength(route_id INT)
-RETURNS INT
-DETERMINISTIC
+CREATE TRIGGER update_infrastructure_to_broken
+AFTER INSERT ON MALFUNCTION
+FOR EACH ROW
 BEGIN
-    DECLARE total_length INT DEFAULT 0;
+    UPDATE INFRASTRUCTURE_ELEMENT
+    SET STATUS = 'B'
+    WHERE ELEMENT_ID = NEW.ELEMENT_FK;
+END;
 
-    SELECT SUM(s.LENGTH) INTO total_length
-    FROM
-        ROUTE_STRETCH rs
-        JOIN STRETCH s ON rs.STRETCH_ID = s.STRETCH_ID
-    WHERE
-        rs.ROUTE_ID = route_id;
-
-    RETURN total_length;
-END //
-
--- Calculate total time [min] of the route
-CREATE FUNCTION IF NOT EXISTS CalculateRouteTime(route_id INT)
-RETURNS DECIMAL(10, 2)
-DETERMINISTIC
+CREATE TRIGGER update_infrastructure_to_working
+AFTER UPDATE ON INFRASTRUCTURE_ELEMENT
+FOR EACH ROW
 BEGIN
-    DECLARE total_time DECIMAL(10, 2) DEFAULT 0.0;
+    IF NEW.STATUS = 'A' THEN
+        UPDATE MALFUNCTION
+        SET REPAIR_DATE = CURDATE()
+        WHERE ELEMENT_FK = NEW.ELEMENT_ID AND REPAIR_DATE IS NULL;
+    END IF;
+END;
 
-    SELECT  SUM(s.LENGTH / s.MAX_SPEED) INTO total_time
-    FROM
-        ROUTE_STRETCH rs
-        JOIN STRETCH s ON rs.STRETCH_ID = s.STRETCH_ID
-    WHERE
-        rs.ROUTE_ID = route_id;
 
-    RETURN total_time*60;
-END //
 
 DELIMITER ;
