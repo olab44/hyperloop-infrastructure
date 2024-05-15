@@ -51,4 +51,13 @@ BEGIN
     VALUES (p_route_id, p_capsule_id);
 END //
 
+CREATE PROCEDURE UpdateInfrastructureState(IN elementId INT, IN newState VARCHAR(1))
+BEGIN
+    UPDATE INFRASTRUCTURE_ELEMENT
+    SET STATUS = newState
+    WHERE ELEMENT_ID = elementId;
+END //
+
+
+
 DELIMITER ;
