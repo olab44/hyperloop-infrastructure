@@ -36,11 +36,27 @@ function getAllRoutes(callback) {
     });
 }
 
-function addRoute(routeId, name, callback) {
+function getAllStretches(callback) {
     const db = connect();
 
-    const query = 'INSERT INTO ROUTE (ROUTE_ID, NAME) VALUES (?, ?)';
-    db.query(query, [routeId, name], (err, results) => {
+    const query = 'SELECT STRETCH_ID, START_STATION_FK AS START_STATION, END_STATION_FK AS END_STATION FROM STRETCH';
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error retrieving data from routes table:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
+function addRoute(name, stretches, callback) {
+    const db = connect();
+    const query = 'CALL AddRoute(?,?)';
+    db.query(query, [name, stretches], (err, results) => {
         if (err) {
             console.error('Error adding route:', err);
             callback(err, null);
@@ -86,6 +102,7 @@ function assignCapsule(routeId, capsuleId, callback) {
 
 module.exports = {
     getAllRoutes,
+    getAllStretches,
     addRoute,
     deleteRoute,
     assignCapsule

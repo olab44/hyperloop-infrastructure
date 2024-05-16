@@ -1,0 +1,8 @@
+.chosen-stretches {
+    pointer-events: none;
+}
+
+li.disabled {
+    pointer-events:none;
+    opacity:0.6;
+}

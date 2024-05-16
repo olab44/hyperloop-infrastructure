@@ -1,22 +1,49 @@
-function addRoute() {
-    const routeId = document.getElementById('route-id').value;
-    const routeName = document.getElementById('route-name').value;
-    const startStationId = document.getElementById('start-station-id').value;
-    const endStationId = document.getElementById('end-station-id').value;
+let chosen_stretches = [];
 
+function displayStretches(stretches) {
+    const available_stretches_list = document.getElementById("available-stretches-list");
+    available_stretches_list.innerHTML = '';
+
+    stretches.forEach(stretch => {
+        const stretchElement = document.createElement('li');
+        stretchElement.classList.add('stretch');
+
+        stretchElement.innerHTML = `${stretch.STRETCH_ID} | ${stretch.START_STATION} --> ${stretch.END_STATION}`;
+        stretchElement.addEventListener('dblclick', function() {
+            chosen_stretches.push(stretch);
+            const chosen_stretches_list = document.getElementById("chosen-stretches-list");
+            chosen_stretches_list.appendChild(stretchElement);
+            displayStretches(stretches)
+        });
+        const lastChosen = chosen_stretches[chosen_stretches.length - 1];
+        if (lastChosen && stretch.START_STATION !== lastChosen.END_STATION) { stretchElement.classList.add('disabled'); }
+
+        available_stretches_list.appendChild(stretchElement);
+    });
+}
+
+function fetchAndDisplayStretches() {
+    fetch('/stretches')
+        .then(response => response.json())
+        .then(data => { displayStretches(data); })
+        .catch(error => { console.error('Error fetching routes:', error);});
+}
+
+function addRoute() {
+    const routeName = document.getElementById('route-name').value;
+    let stretch_ids = chosen_stretches.map(stretch => stretch.STRETCH_ID);
+    stretch_ids = stretch_ids.join(",")
     fetch('/routes', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ routeId, name: routeName, startStationId, endStationId})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ routeName, stretch_ids })
     })
     .then(response => response.json())
-    .then(data => {
-        alert('Route added successfully');
-        fetchAndDisplayRoutes();
-    })
+    .then(data => { alert('Route added successfully'); })
     .catch(error => {console.error('Error adding route:', error);});
+
+    chosen_stretches = [];
+    fetchAndDisplayStretches();
 }
 
 function deleteRoute() {
@@ -26,13 +53,8 @@ function deleteRoute() {
         method: 'DELETE'
     })
     .then(response => response.json())
-    .then(data => {
-        alert('Route deleted successfully');
-        fetchAndDisplayRoutes();
-    })
-    .catch(error => {
-        console.error('Error deleting route:', error);
-    });
+    .then(data => { alert('Route deleted successfully'); })
+    .catch(error => { console.error('Error deleting route:', error); });
 }
 
 function assignCapsuleToRoute() {
@@ -41,57 +63,45 @@ function assignCapsuleToRoute() {
 
     fetch('/routes/assign', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ routeId, capsuleId })
     })
     .then(response => response.json())
-    .then(data => {
-        alert('Capsule assigned to route successfully');
-    })
-    .catch(error => {
-        console.error('Error assigning capsule to route:', error);
-    });
+    .then(data => { alert('Capsule assigned to route successfully'); })
+    .catch(error => { console.error('Error assigning capsule to route:', error); });
 }
 
 function updateInfrastructureState(elementId, newState) {
     fetch('/update-infrastructure', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ elementId, newState })
     })
     .then(response => response.json())
-    .then(data => {
-        alert('Infrastructure state updated successfully');
-    })
-    .catch(error => {
-        console.error('Error updating infrastructure state:', error);
-    });
+    .then(data => { alert('Infrastructure state updated successfully'); })
+    .catch(error => { console.error('Error updating infrastructure state:', error); });
 }
 
-function updateInfrastructureState() {
-    const elementId = document.getElementById('element-id').value;
-    const newState = document.getElementById('new-state').value;
+// function updateInfrastructureState() {
+//     const elementId = document.getElementById('element-id').value;
+//     const newState = document.getElementById('new-state').value;
 
-    fetch('/update-infrastructure', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ elementId, newState })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Infrastructure state updated successfully');
-        fetchAndDisplayInfrastructureElements();
-    })
-    .catch(error => {
-        console.error('Error updating infrastructure state:', error);
-    });
-}
+//     fetch('/update-infrastructure', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ elementId, newState })
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         alert('Infrastructure state updated successfully');
+//         fetchAndDisplayInfrastructureElements();
+//     })
+//     .catch(error => {
+//         console.error('Error updating infrastructure state:', error);
+//     });
+// }
 
 
 document.getElementById('update-state-form').addEventListener('submit', function(e) {
@@ -102,7 +112,7 @@ document.getElementById('update-state-form').addEventListener('submit', function
 
 document.getElementById('add-route-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    addRoute();
+    if (chosen_stretches.length > 0) { addRoute(); }
 });
 
 document.getElementById('delete-route-form').addEventListener('submit', function(e) {
@@ -114,3 +124,5 @@ document.getElementById('assign-capsule-form').addEventListener('submit', functi
     e.preventDefault();
     assignCapsuleToRoute();
 });
+
+fetchAndDisplayStretches();

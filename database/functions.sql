@@ -1,4 +1,3 @@
--- Calculate total length and total time of the route
 DELIMITER //
 
 -- Calculate total length [km] of the route
@@ -33,22 +32,6 @@ BEGIN
         rs.ROUTE_ID = route_id;
 
     RETURN total_time*60;
-END //
-
-
-CREATE PROCEDURE DeleteRoute(IN routeId INT)
-BEGIN
-    DELETE FROM ROUTE WHERE ROUTE_ID = routeId;
-END //
-
-
-CREATE PROCEDURE AssignCapsuleToRoute(
-    IN p_route_id INT,
-    IN p_capsule_id INT
-)
-BEGIN
-    INSERT INTO ROUTE_CAPSULE (ROUTE_ID, CAPSULE_ID)
-    VALUES (p_route_id, p_capsule_id);
 END //
 
 DELIMITER ;

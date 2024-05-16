@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hyperloop Infrastructure Management</title>
+    <link rel="shorcut icon" type="image/x-icon" href="images/hyperloop.ico">
     <link rel="stylesheet" href="stylesheets/basic_design.css">
     <link rel="stylesheet" href="stylesheets/management.css">
 </head>
@@ -24,10 +25,9 @@
             <div>
                 <h2>Create New Route</h2>
                 <form id="add-route-form">
-                    <input type="number" id="route-id" placeholder="Route ID" required>
-                    <input type="text" id="route-name" placeholder="Route Name" required>
-                    <input type="number" id="start-station-id" placeholder="Start Station ID">
-                    <input type="number" id="end-station-id" placeholder="End Station ID">
+                    <input type="text" id="route-name" placeholder="Route Name" maxlength="20" required>
+                    <ul id="available-stretches-list"></ul>
+                    <ol id="chosen-stretches-list"></ol>
                     <button type="submit">Add Route</button>
                 </form>
             </div>
