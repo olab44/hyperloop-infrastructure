@@ -113,14 +113,29 @@ function updateInfrastructure(elementId, newState, callback) {
     });
 }
 
+function checkRouteStatus(callback) {
+    const db = connect();
+    const query = 'SELECT ROUTE_ID, NAME FROM MalfunctioningRoutes';
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching malfunctioning routes:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+        db.end();
+    });
+}
 
 
 
 module.exports = {
+    connect,
     getAllRoutes,
     getAllStretches,
     addRoute,
     deleteRoute,
     assignCapsule,
-    updateInfrastructure
+    updateInfrastructure,
+    checkRouteStatus
 };

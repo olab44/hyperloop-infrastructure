@@ -46,7 +46,7 @@ BEGIN
     WHERE ELEMENT_ID = elementId;
 END //
 
---update infrastructure elemtn state
+--update infrastructure element state
 CREATE PROCEDURE UpdateInfrastructureState(IN elementId INT, IN newState VARCHAR(1))
 BEGIN
     UPDATE INFRASTRUCTURE_ELEMENT

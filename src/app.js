@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require("path");
 
-const { getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure } = require('./connect_database');
+const { connect, getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure, checkRouteStatus } = require('./connect_database');
 
 const app = express();
 
@@ -60,6 +60,17 @@ app.post('/routes', (req, res) => {
     });
 });
 
+app.get('/malfunctioning-routes', (req, res) => {
+    checkRouteStatus((err, malfunctioningRoutes) => {
+        if (err) {
+            console.error('Error fetching malfunctioning routes:', err);
+            res.status(500).json({ error: 'Error fetching malfunctioning routes' });
+        } else {
+            res.json(malfunctioningRoutes);
+        }
+    });
+});
+
 app.post('/routes/assign', (req, res) => {
     const routeId = req.body.routeId;
     const capsuleId = req.body.capsuleId;
@@ -87,7 +98,6 @@ app.post('/update-infrastructure', (req, res) => {
         }
     })
 });
-
 
 
 
