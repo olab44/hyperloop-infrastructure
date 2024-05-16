@@ -36,6 +36,51 @@ function getAllRoutes(callback) {
     });
 }
 
+function getAllMalfunctions(callback) {
+    const db = connect();
+
+    const query = 'SELECT m.MALFUNCTION_ID, s.STRETCH_ID, ie.ELEMENT_ID,\
+                    m.MALFUNCTION_DATE, m.STATUS, m.REPAIR_DATE\
+                    FROM MALFUNCTIONS m\
+                    JOIN INFRASTRUCTURE_ELEMENT ie ON m.ELEMENT_FK = ie.ELEMENT_ID\
+                    JOIN STRETCH s ON s.STRETCH_ID = ie.STRETCH_FK\
+                    ORDER BY m.MALFUNCTION_DATE DESC';
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error retrieving data from malfunction, stretch, or infrastructure element table:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
+function getMalfunctionsByRoute(callback){
+    const db = connect;
+
+    const query = 'SELECT mf.*, COUNT(m.*)\
+                    FROM MalfunctioningRoutes mf\
+                    JOIN ROUTE_STRETCH rs ON rs.ROUTE_ID = mf.ROUTE_ID\
+                    JOIN INFRASTRUCTURE_ELEMENT ie ON ie.STRETCH_FK = rs.STRETCH_ID\
+                    JOIN MALFUNCTION m ON m.ELEMENT_FK=ie.ELEMENT_ID\
+                    GROUP BY mf.NAME';
+    
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error retrieving data from malfunction table or fetching malfunctioning routes:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
+
 function getAllStretches(callback) {
     const db = connect();
 

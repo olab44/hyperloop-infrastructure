@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require("path");
 
-const { connect, getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure, checkRouteStatus } = require('./connect_database');
+const { connect, getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure, checkRouteStatus, getAllMalfunctions, getMalfunctionsByRoute } = require('./connect_database');
 
 const app = express();
 
@@ -18,6 +18,17 @@ app.get('/routes', (req, res) => {
         if (err) {
             console.error('Error fetching routes:', err);
             res.status(500).json({ error: 'Error fetching routes' });
+        } else {
+            res.json(routes);
+        }
+    });
+});
+
+app.get('/malfunctions', (req, res) => {
+    getAllMalfunctions((err, routes) => {
+        if (err) {
+            console.error('Error fetching malfunctions:', err);
+            res.status(500).json({ error: 'Error fetching malfunctions' });
         } else {
             res.json(routes);
         }
@@ -70,6 +81,18 @@ app.get('/malfunctioning-routes', (req, res) => {
         }
     });
 });
+
+app.get('/malfunctions-by-routes', (req, res) => {
+    getMalfunctionsByRoute((err, malfunctioningRoutes) => {
+        if (err) {
+            console.error('Error fetching malfunctions by routes:', err);
+            res.status(500).json({ error: 'Error fetching malfunctions by routes' });
+        } else {
+            res.json(malfunctioningRoutes);
+        }
+    });
+});
+
 
 app.post('/routes/assign', (req, res) => {
     const routeId = req.body.routeId;
