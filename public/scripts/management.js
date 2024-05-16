@@ -43,6 +43,8 @@ function addRoute() {
     .catch(error => {console.error('Error adding route:', error);});
 
     chosen_stretches = [];
+    document.getElementById("chosen-stretches-list").innerHTML = "";
+    document.getElementById('route-name').value = "";
     fetchAndDisplayStretches();
 }
 
@@ -71,37 +73,26 @@ function assignCapsuleToRoute() {
     .catch(error => { console.error('Error assigning capsule to route:', error); });
 }
 
-function updateInfrastructureState(elementId, newState) {
+function updateInfrastructureState() {
+    const elementId = document.getElementById('element-id').value;
+    const newState = document.getElementById('new-state').value;
+
     fetch('/update-infrastructure', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ elementId, newState })
     })
     .then(response => response.json())
-    .then(data => { alert('Infrastructure state updated successfully'); })
-    .catch(error => { console.error('Error updating infrastructure state:', error); });
+    .then(data => {
+        alert('Infrastructure state updated successfully');
+    })
+    .catch(error => {
+        console.error('Error updating infrastructure state:', error);
+    });
 }
 
-// function updateInfrastructureState() {
-//     const elementId = document.getElementById('element-id').value;
-//     const newState = document.getElementById('new-state').value;
-
-//     fetch('/update-infrastructure', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ elementId, newState })
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         alert('Infrastructure state updated successfully');
-//         fetchAndDisplayInfrastructureElements();
-//     })
-//     .catch(error => {
-//         console.error('Error updating infrastructure state:', error);
-//     });
-// }
 
 
 document.getElementById('update-state-form').addEventListener('submit', function(e) {
@@ -123,6 +114,11 @@ document.getElementById('delete-route-form').addEventListener('submit', function
 document.getElementById('assign-capsule-form').addEventListener('submit', function(e) {
     e.preventDefault();
     assignCapsuleToRoute();
+});
+
+document.getElementById('update-state-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    updateInfrastructureState();
 });
 
 fetchAndDisplayStretches();

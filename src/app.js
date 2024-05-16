@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require("path");
 
-const { getAllRoutes, getAllStretches, addRoute, deleteRoute } = require('./connect_database');
+const { getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure } = require('./connect_database');
 
 const app = express();
 
@@ -59,6 +59,36 @@ app.post('/routes', (req, res) => {
         }
     });
 });
+
+app.post('/routes/assign', (req, res) => {
+    const routeId = req.body.routeId;
+    const capsuleId = req.body.capsuleId;
+
+    assignCapsule(routeId, capsuleId, (err, result) => {
+        if (err) {
+            console.error('Error assigning capsule:', err);
+            res.status(500).json({ error: 'Error assiging capsule' });
+        } else {
+            res.json({ message: 'capsule assigned successfully' });
+        }
+    })
+
+    res.json({ success: true });
+});
+
+app.post('/update-infrastructure', (req, res) => {
+    const { elementId, newState } = req.body;
+    updateInfrastructure(elementId, newState, (err, result) => {
+        if (err) {
+            console.error('Error updating state:', err);
+            res.status(500).json({ error: 'Error updating state' });
+        } else {
+            res.json({ message: 'state updated successfully' });
+        }
+    })
+});
+
+
 
 
 const PORT = 4000;

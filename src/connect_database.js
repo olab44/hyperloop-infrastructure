@@ -99,11 +99,28 @@ function assignCapsule(routeId, capsuleId, callback) {
     });
 }
 
+function updateInfrastructure(elementId, newState, callback) {
+    const db = connect();
+    const query = 'UPDATE INFRASTRUCTURE_ELEMENT SET STATUS = ? WHERE ELEMENT_ID = ?';
+    db.query(query, [newState, elementId], (err, results) => {
+        if (err) {
+            console.error('Error changing status:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+        db.end();
+    });
+}
+
+
+
 
 module.exports = {
     getAllRoutes,
     getAllStretches,
     addRoute,
     deleteRoute,
-    assignCapsule
+    assignCapsule,
+    updateInfrastructure
 };
