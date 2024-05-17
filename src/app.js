@@ -25,12 +25,12 @@ app.get('/routes', (req, res) => {
 });
 
 app.get('/malfunctions', (req, res) => {
-    getAllMalfunctions((err, routes) => {
+    getAllMalfunctions((err, malfunctions) => {
         if (err) {
             console.error('Error fetching malfunctions:', err);
             res.status(500).json({ error: 'Error fetching malfunctions' });
         } else {
-            res.json(routes);
+            res.json(malfunctions);
         }
     });
 });

@@ -39,12 +39,12 @@ function getAllRoutes(callback) {
 function getAllMalfunctions(callback) {
     const db = connect();
 
-    const query = 'SELECT m.MALFUNCTION_ID, s.STRETCH_ID, ie.ELEMENT_ID,\
-                    m.MALFUNCTION_DATE, m.STATUS, m.REPAIR_DATE\
-                    FROM MALFUNCTIONS m\
+    const query = 'SELECT m.MALFUNCTION_ID AS mid, s.STRETCH_ID AS sid, ie.ELEMENT_ID AS eid,\
+                    m.MALFUNCTION_DATE AS mdate, m.STATUS AS s, m.REPAIR_DATE AS rdate\
+                    FROM MALFUNCTION m\
                     JOIN INFRASTRUCTURE_ELEMENT ie ON m.ELEMENT_FK = ie.ELEMENT_ID\
                     JOIN STRETCH s ON s.STRETCH_ID = ie.STRETCH_FK\
-                    ORDER BY m.MALFUNCTION_DATE DESC';
+                    ORDER BY m.MALFUNCTION_DATE ASC';
 
     db.query(query, (err, results) => {
         if (err) {
@@ -179,6 +179,8 @@ module.exports = {
     getAllRoutes,
     getAllStretches,
     addRoute,
+    getAllMalfunctions,
+    getMalfunctionsByRoute,
     deleteRoute,
     assignCapsule,
     updateInfrastructure,
