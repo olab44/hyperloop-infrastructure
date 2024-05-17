@@ -59,14 +59,14 @@ function getAllMalfunctions(callback) {
 }
 
 function getMalfunctionsByRoute(callback){
-    const db = connect;
+    const db = connect();
 
-    const query = 'SELECT mf.*, COUNT(m.*)\
+    const query = 'SELECT mf.*, COUNT(m.ELEMENT_FK) AS countedErrors\
                     FROM MalfunctioningRoutes mf\
                     JOIN ROUTE_STRETCH rs ON rs.ROUTE_ID = mf.ROUTE_ID\
                     JOIN INFRASTRUCTURE_ELEMENT ie ON ie.STRETCH_FK = rs.STRETCH_ID\
                     JOIN MALFUNCTION m ON m.ELEMENT_FK=ie.ELEMENT_ID\
-                    GROUP BY mf.NAME';
+                    GROUP BY mf.ROUTE_ID';
     
     db.query(query, (err, results) => {
         if (err) {

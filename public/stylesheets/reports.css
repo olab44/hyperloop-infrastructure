@@ -1,0 +1,41 @@
+.catalogue {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+#malfunctions-by-route {
+    list-style-type: none;
+    flex: 3;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding: 0px 20px;
+    border-right: solid 5px black;
+    flex: 1;
+}
+
+#malfunctions-by-month {
+    list-style-type: none;
+    flex: 3;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding: 0px 20px;
+    border-right: solid 5px black;
+    flex: 2;
+}
+
+.route-info {
+    background-color: #ddd;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: double black;
+    border-width: 5px 0px;
+}
+
+.malfunction-info {
+    background-color: #ddd;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: double black;
+    border-width: 5px 0px;
+}
