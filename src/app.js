@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require("path");
 
 const { getAllRoutes, getFilteredRoutes, getAllStretches, getAllMalfunctions, getMalfunctionsByRoute,
-        addRoute, deleteRoute, assignCapsule, updateInfrastructure} = require('./connect_database');
+        addRoute, deleteRoute, assignCapsule, updateInfrastructure, getStretchElements} = require('./connect_database');
 
 const app = express();
 
@@ -71,7 +71,6 @@ app.delete('/routes/:routeId', (req, res) => {
     });
 });
 
-
 app.post('/routes', (req, res) => {
     const { routeName, stretch_ids } = req.body;
     addRoute( routeName, stretch_ids, (err, result) => {
@@ -124,6 +123,17 @@ app.post('/update-infrastructure', (req, res) => {
     })
 });
 
+app.post('/stretch-ie', (req, res) => {
+    const { stretchID } = req.body;
+    getStretchElements(stretchID, (err, routes) => {
+        if (err) {
+            console.error('Error fetching infrastructure elements:', err);
+            res.status(500).json({ error: 'Error fetching infrastracture elements' });
+        } else {
+            res.json(routes);
+        }
+    });
+});
 
 
 const PORT = 4000;

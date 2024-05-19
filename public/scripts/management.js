@@ -8,11 +8,11 @@ function displayStretches(stretches) {
         const stretchElement = document.createElement('li');
         stretchElement.classList.add('stretch');
         stretchElement.innerHTML = `${stretch.STRETCH_ID} | ${stretch.START_STATION} --> ${stretch.END_STATION}`;
-        
+
         stretchElement.addEventListener('click', function() {
             displayStretchInfo(stretch);
         });
-        
+
         stretchElement.addEventListener('dblclick', function() {
             chosen_stretches.push(stretch);
             const chosen_stretches_list = document.getElementById("chosen-stretches-list");
@@ -29,6 +29,20 @@ function displayStretches(stretches) {
     });
 }
 
+function displayStretchIE(stretch_ie) {
+    document.querySelectorAll("#stretch-ie-panel ui").forEach(function(list) { list.innerHTML = '' });
+    stretch_ie.forEach(ie => {
+        const ieElement = document.createElement('li');
+        ieElement.classList.add('ie');
+        const ieStatus = ie.STATUS == 'B' ? 'Out-Of-Order' : 'Functional';
+        ieElement.innerHTML =  `
+            <span>${ie.ELEMENT_ID} | ${ie.NAME}</span>
+            <span class="${ieStatus}">${ieStatus}</span>
+        `;
+        document.getElementById(`${ie.SELECTOR}`).appendChild(ieElement);
+    });
+}
+
 function displayStretchInfo(stretch) {
     const stretchInfoPanel = document.getElementById('stretch-info');
     stretchInfoPanel.innerHTML = `
@@ -39,6 +53,16 @@ function displayStretchInfo(stretch) {
         <p>Length: ${stretch.LENGTH} km</p>
         <p>Max Speed: ${stretch.MAX_SPEED} km/h</p>
     `;
+
+    const stretchID = stretch.STRETCH_ID;
+    fetch('/stretch-ie', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stretchID })
+    })
+    .then(response => response.json())
+    .then(stretch_ie => { displayStretchIE(stretch_ie); })
+    .catch(error => { console.error('Error fetching/displaying infrastructure elements', error); });
 }
 
 

@@ -199,6 +199,23 @@ function updateInfrastructure(elementId, newState, callback) {
     });
 }
 
+function getStretchElements(stretchId, callback) {
+    const db = connect();
+
+    const query = 'SELECT ELEMENT_ID, NAME, SELECTOR, STATUS\
+                   FROM INFRASTRUCTURE_ELEMENT\
+                   WHERE STRETCH_FK = ?';
+
+    db.query(query, stretchId, (err, results) => {
+        if (err) {
+            console.error('Error changing status:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+        db.end();
+    });
+}
 
 
 module.exports = {
@@ -212,4 +229,5 @@ module.exports = {
     deleteRoute,
     assignCapsule,
     updateInfrastructure,
+    getStretchElements,
 };

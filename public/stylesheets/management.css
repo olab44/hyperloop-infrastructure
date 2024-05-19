@@ -1,4 +1,4 @@
-.chosen-stretches {
+.chosen-stretches-list {
     pointer-events: none;
 }
 
@@ -59,10 +59,14 @@ h2
     text-align: center;
 }
 
+#details-panel {
+    display: flex;
+    flex-direction: column;
+}
+
 #stretch-info {
     width: 100%;
     border-top: solid 5px black;
-    padding: 10px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -72,4 +76,25 @@ h2
 #stretch-info h3 {
     width: 100%;
     text-align: center;
+}
+
+#stretch-ie-panel {
+    display: flex;
+}
+
+#stretch-ie-panel ui {
+    width: 20%;
+    height: 100%;
+    background-color: #ddd;
+    list-style-type: none;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    margin: auto;
+    border: solid 3px black;
+}
+.ie span.Functional {
+    color: green;
+}
+.ie span.Out-Of-Order {
+    color: darkorange;
 }
