@@ -6,3 +6,18 @@ li.disabled {
     pointer-events:none;
     opacity:0.6;
 }
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow: scroll;
+}
+
+.operations
+{
+    width: 20vw;
+    margin: 0 30px;
+}
