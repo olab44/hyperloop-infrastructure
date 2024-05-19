@@ -49,19 +49,19 @@ function getFilteredRoutes(minLength, maxLength, minTime, maxTime, ieSelectors, 
 
     const filters = []
     if (minLength !=="") {
-        query = query.concat('AND CalculateRouteLength(r.ROUTE_ID) >= ? ');
+        query = query.concat("AND CalculateRouteLength(r.ROUTE_ID) >= ? ");
         filters.push(parseInt(minLength, 10)) }
     if (maxLength !=="") {
-        query = query.concat('AND CalculateRouteLength(r.ROUTE_ID) <= ? ');
+        query = query.concat("AND CalculateRouteLength(r.ROUTE_ID) <= ? ");
         filters.push(parseInt(maxLength, 10)) }
     if (minTime !=="") {
-        query = query.concat('AND CalculateRouteTime(r.ROUTE_ID) >= ? ');
+        query = query.concat("AND CalculateRouteTime(r.ROUTE_ID) >= ? ");
         filters.push(parseInt(minTime, 10)) }
     if (maxTime !=="") {
-        query = query.concat('AND CalculateRouteTime(r.ROUTE_ID) <= ? ');
+        query = query.concat("AND CalculateRouteTime(r.ROUTE_ID) <= ? ");
         filters.push(parseInt(maxTime, 10)) }
     if (ieSelectors.length > 0) {
-        query = query.concat('AND EXISTS(SELECT * FROM MalfunctioningRoutes mr WHERE mr.ROUTE_ID = r.ROUTE_ID AND mr.MALFUNCTION_TYPE IN (?))');
+        query = query.concat("AND EXISTS(SELECT * FROM RouteIE rie WHERE rie.ROUTE_ID = r.ROUTE_ID AND rie.SELECTOR IN (?) AND rie.STATUS = 'B')");
         filters.push(ieSelectors) }
 
     db.query(query, filters, (err, results) => {
@@ -80,11 +80,11 @@ function getAllMalfunctions(callback) {
     const db = connect();
 
     const query = 'SELECT m.MALFUNCTION_ID AS mid, s.STRETCH_ID AS sid, ie.ELEMENT_ID AS eid,\
-                    m.MALFUNCTION_DATE AS mdate, m.STATUS AS s, m.REPAIR_DATE AS rdate\
-                    FROM MALFUNCTION m\
-                    JOIN INFRASTRUCTURE_ELEMENT ie ON m.ELEMENT_FK = ie.ELEMENT_ID\
-                    JOIN STRETCH s ON s.STRETCH_ID = ie.STRETCH_FK\
-                    ORDER BY m.MALFUNCTION_DATE ASC';
+                   m.MALFUNCTION_DATE AS mdate, m.STATUS AS s, m.REPAIR_DATE AS rdate\
+                   FROM MALFUNCTION m\
+                   JOIN INFRASTRUCTURE_ELEMENT ie ON m.ELEMENT_FK = ie.ELEMENT_ID\
+                   JOIN STRETCH s ON s.STRETCH_ID = ie.STRETCH_FK\
+                   ORDER BY m.MALFUNCTION_DATE ASC';
 
     db.query(query, (err, results) => {
         if (err) {
@@ -101,13 +101,10 @@ function getAllMalfunctions(callback) {
 function getMalfunctionsByRoute(callback){
     const db = connect();
 
-    const query = 'SELECT r.ROUTE_ID, r.NAME, COUNT(m.ELEMENT_FK) AS countedErrors\
-                    FROM ROUTE r\
-                    JOIN ROUTE_STRETCH rs ON rs.ROUTE_ID = r.ROUTE_ID\
-                    JOIN INFRASTRUCTURE_ELEMENT ie ON ie.STRETCH_FK = rs.STRETCH_ID\
-                    JOIN MALFUNCTION m ON m.ELEMENT_FK=ie.ELEMENT_ID\
-                    WHERE m.STATUS = "B"\
-                    GROUP BY r.ROUTE_ID';
+    const query = 'SELECT ROUTE_ID, NAME, COUNT(ELEMENT_ID) AS countedErrors\
+                   FROM RouteIE\
+                   WHERE STATUS = "B"\
+                   GROUP BY ROUTE_ID';
 
     db.query(query, (err, results) => {
         if (err) {

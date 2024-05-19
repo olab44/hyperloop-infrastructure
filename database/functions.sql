@@ -41,7 +41,8 @@ DETERMINISTIC
 BEGIN
     DECLARE malfunction_record INT;
 
-    SELECT COUNT(*) INTO malfunction_record FROM MalfunctioningRoutes WHERE ROUTE_ID = routeID;
+    SELECT COUNT(*) INTO malfunction_record FROM RouteIE
+    WHERE ROUTE_ID = routeID AND STATUS = 'B';
 
     IF malfunction_record > 0 THEN
         RETURN 0;
