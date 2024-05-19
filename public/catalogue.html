@@ -24,11 +24,34 @@
             </div>
             <div class="catalogue">
                 <ul id="route-catalogue"></ul>
-                <div class="filters-menu"></div>
+                <form id="filters-form">
+                    <span>ROUTE LENGTH</span>
+                    <div class="inputs">
+                        <input type="number" id="minLength" placeholder="MIN LENGTH" required>
+                        <input type="number" id="maxLength" placeholder="MAX LENGTH" required>
+                    </div>
+                    <span>ROUTE TIME</span>
+                    <div class="inputs">
+                        <input type="number" id="minTime" placeholder="MIN TIME" required>
+                        <input type="number" id="maxTime" placeholder="MAX TIME" required>
+                    </div>
+                    <span>MALFUNCTIONING INFRASTRACTURE [any checked]</span>
+                    <div class="inputs checkboxes">
+                        <p><input type="checkbox" id="SEMAPHORE"><label for="SEMAPHORE">SEMAPHORE</label></p>
+                        <p><input type="checkbox" id="PORT"><label for="PORT">PRESSURIZATION PORT</label></p>
+                        <p><input type="checkbox" id="EXIT"><label for="EXIT">EXIT</label></p>
+                        <p><input type="checkbox" id="PYLON"><label for="PYLON">PYLON</label></p>
+                        <p><input type="checkbox" id="TUBING"><label for="TUBING">TUBING</label></p>
+                    </div>
+                    <div class="buttons">
+                        <button id="apply-button" type="submit">APPLY FILTERS</button>
+                        <button id="clear-button">CLEAR FILTERS</button>
+                    </div>
+                </form>
             </div>
             <div id="details-panel"></div>
         </div>
     </div>
-    <script src="scripts/routes.js"></script>
+    <script src="scripts/catalogue.js"></script>
 </body>
 </html>

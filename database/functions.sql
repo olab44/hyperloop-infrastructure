@@ -34,4 +34,20 @@ BEGIN
     RETURN total_time*60;
 END //
 
+-- Verify if the route is functional
+CREATE FUNCTION IF NOT EXISTS IsFunctional(routeID INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE malfunction_record INT;
+
+    SELECT COUNT(*) INTO malfunction_record FROM MalfunctioningRoutes WHERE ROUTE_ID = routeID;
+
+    IF malfunction_record > 0 THEN
+        RETURN 0;
+    ELSE
+        RETURN 1;
+    END IF;
+END //
+
 DELIMITER ;

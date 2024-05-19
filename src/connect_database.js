@@ -21,10 +21,37 @@ function getAllRoutes(callback) {
 
     const query = 'SELECT r.*,\
                    CalculateRouteLength(r.ROUTE_ID) AS TOTAL_LENGTH,\
-                   CalculateRouteTime(r.ROUTE_ID) AS TOTAL_TIME\
+                   CalculateRouteTime(r.ROUTE_ID) AS TOTAL_TIME,\
+                   IsFunctional(r.ROUTE_ID) AS IS_FUNCTIONAL\
                    FROM ROUTE AS r';
 
     db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error retrieving data from routes table:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
+function getFilteredRoutes(minLength, maxLength, minTime, maxTime, ieSelectors, callback) {
+    const db = connect();
+
+    let query = 'SELECT r.*,\
+                 CalculateRouteLength(r.ROUTE_ID) AS TOTAL_LENGTH,\
+                 CalculateRouteTime(r.ROUTE_ID) AS TOTAL_TIME,\
+                 IsFunctional(r.ROUTE_ID) AS IS_FUNCTIONAL\
+                 FROM ROUTE AS r\
+                 WHERE CalculateRouteLength(r.ROUTE_ID) BETWEEN ? AND ?\
+                 AND CalculateRouteTime(r.ROUTE_ID) BETWEEN ? AND ?';
+
+    if (ieSelectors.length > 0) { query = query.concat('AND EXISTS(SELECT * FROM MalfunctioningRoutes mr\
+                                                        WHERE mr.ROUTE_ID = r.ROUTE_ID AND mr.MALFUNCTION_TYPE IN (?))') }
+
+    db.query(query, [minLength, maxLength, minTime, maxTime, ieSelectors], (err, results) => {
         if (err) {
             console.error('Error retrieving data from routes table:', err);
             callback(err, null);
@@ -61,13 +88,14 @@ function getAllMalfunctions(callback) {
 function getMalfunctionsByRoute(callback){
     const db = connect();
 
-    const query = 'SELECT mf.*, COUNT(m.ELEMENT_FK) AS countedErrors\
-                    FROM MalfunctioningRoutes mf\
-                    JOIN ROUTE_STRETCH rs ON rs.ROUTE_ID = mf.ROUTE_ID\
+    const query = 'SELECT r.ROUTE_ID, r.NAME, COUNT(m.ELEMENT_FK) AS countedErrors\
+                    FROM ROUTE r\
+                    JOIN ROUTE_STRETCH rs ON rs.ROUTE_ID = r.ROUTE_ID\
                     JOIN INFRASTRUCTURE_ELEMENT ie ON ie.STRETCH_FK = rs.STRETCH_ID\
                     JOIN MALFUNCTION m ON m.ELEMENT_FK=ie.ELEMENT_ID\
-                    GROUP BY mf.ROUTE_ID';
-    
+                    WHERE m.STATUS = "B"\
+                    GROUP BY r.ROUTE_ID';
+
     db.query(query, (err, results) => {
         if (err) {
             console.error('Error retrieving data from malfunction table or fetching malfunctioning routes:', err);
@@ -158,25 +186,12 @@ function updateInfrastructure(elementId, newState, callback) {
     });
 }
 
-function checkRouteStatus(callback) {
-    const db = connect();
-    const query = 'SELECT ROUTE_ID, NAME FROM MalfunctioningRoutes';
-    db.query(query, (err, results) => {
-        if (err) {
-            console.error('Error fetching malfunctioning routes:', err);
-            callback(err, null);
-        } else {
-            callback(null, results);
-        }
-        db.end();
-    });
-}
-
 
 
 module.exports = {
     connect,
     getAllRoutes,
+    getFilteredRoutes,
     getAllStretches,
     addRoute,
     getAllMalfunctions,
@@ -184,5 +199,4 @@ module.exports = {
     deleteRoute,
     assignCapsule,
     updateInfrastructure,
-    checkRouteStatus
 };

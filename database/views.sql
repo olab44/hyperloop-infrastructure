@@ -1,7 +1,8 @@
 CREATE VIEW MalfunctioningRoutes AS
 SELECT DISTINCT
     r.ROUTE_ID,
-    r.NAME
+    r.NAME,
+    ie.SELECTOR AS MALFUNCTION_TYPE
 FROM
     ROUTE r
 JOIN

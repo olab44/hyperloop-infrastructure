@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require("path");
 
-const { connect, getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure, checkRouteStatus, getAllMalfunctions, getMalfunctionsByRoute } = require('./connect_database');
+const { getAllRoutes, getFilteredRoutes, getAllStretches, getAllMalfunctions, getMalfunctionsByRoute,
+        addRoute, deleteRoute, assignCapsule, updateInfrastructure} = require('./connect_database');
 
 const app = express();
 
@@ -15,6 +16,18 @@ app.get("/", (req, res) => {
 
 app.get('/routes', (req, res) => {
     getAllRoutes((err, routes) => {
+        if (err) {
+            console.error('Error fetching routes:', err);
+            res.status(500).json({ error: 'Error fetching routes' });
+        } else {
+            res.json(routes);
+        }
+    });
+});
+
+app.post('/routes-filtered', (req, res) => {
+    const { minLength, maxLength, minTime, maxTime, ieSelectors } = req.body;
+    getFilteredRoutes(minLength, maxLength, minTime, maxTime, ieSelectors, (err, routes) => {
         if (err) {
             console.error('Error fetching routes:', err);
             res.status(500).json({ error: 'Error fetching routes' });
@@ -67,17 +80,6 @@ app.post('/routes', (req, res) => {
             res.status(500).json({ error: 'Error adding route' });
         } else {
             res.json({ message: 'Route added successfully' });
-        }
-    });
-});
-
-app.get('/malfunctioning-routes', (req, res) => {
-    checkRouteStatus((err, malfunctioningRoutes) => {
-        if (err) {
-            console.error('Error fetching malfunctioning routes:', err);
-            res.status(500).json({ error: 'Error fetching malfunctioning routes' });
-        } else {
-            res.json(malfunctioningRoutes);
         }
     });
 });

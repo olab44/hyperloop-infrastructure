@@ -85,15 +85,9 @@ function updateInfrastructureState() {
         body: JSON.stringify({ elementId, newState })
     })
     .then(response => response.json())
-    .then(data => {
-        alert('Infrastructure state updated successfully');
-    })
-    .catch(error => {
-        console.error('Error updating infrastructure state:', error);
-    });
+    .then(data => { alert('Infrastructure state updated successfully'); })
+    .catch(error => { console.error('Error updating infrastructure state:', error); });
 }
-
-
 
 document.getElementById('update-state-form').addEventListener('submit', function(e) {
     e.preventDefault();
