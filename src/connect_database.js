@@ -118,11 +118,12 @@ function getMalfunctionsByRoute(callback){
     });
 }
 
-
 function getAllStretches(callback) {
     const db = connect();
-
-    const query = 'SELECT STRETCH_ID, START_STATION_FK AS START_STATION, END_STATION_FK AS END_STATION FROM STRETCH';
+    const query = `SELECT s.STRETCH_ID, st1.NAME AS START_STATION, st2.NAME AS END_STATION
+                   FROM STRETCH s
+                   JOIN STATION st1 ON s.START_STATION_FK = st1.STATION_ID
+                   JOIN STATION st2 ON s.END_STATION_FK = st2.STATION_ID`;
 
     db.query(query, (err, results) => {
         if (err) {

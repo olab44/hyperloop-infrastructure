@@ -7,16 +7,18 @@ function displayStretches(stretches) {
     stretches.forEach(stretch => {
         const stretchElement = document.createElement('li');
         stretchElement.classList.add('stretch');
-
         stretchElement.innerHTML = `${stretch.STRETCH_ID} | ${stretch.START_STATION} --> ${stretch.END_STATION}`;
         stretchElement.addEventListener('dblclick', function() {
             chosen_stretches.push(stretch);
             const chosen_stretches_list = document.getElementById("chosen-stretches-list");
             chosen_stretches_list.appendChild(stretchElement);
-            displayStretches(stretches)
+            displayStretches(stretches);
         });
+
         const lastChosen = chosen_stretches[chosen_stretches.length - 1];
-        if (lastChosen && stretch.START_STATION !== lastChosen.END_STATION) { stretchElement.classList.add('disabled'); }
+        if (lastChosen && stretch.START_STATION !== lastChosen.END_STATION) {
+            stretchElement.classList.add('disabled');
+        }
 
         available_stretches_list.appendChild(stretchElement);
     });
@@ -25,8 +27,12 @@ function displayStretches(stretches) {
 function fetchAndDisplayStretches() {
     fetch('/stretches')
         .then(response => response.json())
-        .then(data => { displayStretches(data); })
-        .catch(error => { console.error('Error fetching routes:', error);});
+        .then(data => {
+            displayStretches(data);
+        })
+        .catch(error => {
+            console.error('Error fetching routes:', error);
+        });
 }
 
 function addRoute() {
