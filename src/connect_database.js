@@ -45,13 +45,26 @@ function getFilteredRoutes(minLength, maxLength, minTime, maxTime, ieSelectors, 
                  CalculateRouteTime(r.ROUTE_ID) AS TOTAL_TIME,\
                  IsFunctional(r.ROUTE_ID) AS IS_FUNCTIONAL\
                  FROM ROUTE AS r\
-                 WHERE CalculateRouteLength(r.ROUTE_ID) BETWEEN ? AND ?\
-                 AND CalculateRouteTime(r.ROUTE_ID) BETWEEN ? AND ?';
+                 WHERE 1 ';
 
-    if (ieSelectors.length > 0) { query = query.concat('AND EXISTS(SELECT * FROM MalfunctioningRoutes mr\
-                                                        WHERE mr.ROUTE_ID = r.ROUTE_ID AND mr.MALFUNCTION_TYPE IN (?))') }
+    const filters = []
+    if (minLength !=="") {
+        query = query.concat('AND CalculateRouteLength(r.ROUTE_ID) >= ? ');
+        filters.push(parseInt(minLength, 10)) }
+    if (maxLength !=="") {
+        query = query.concat('AND CalculateRouteLength(r.ROUTE_ID) <= ? ');
+        filters.push(parseInt(maxLength, 10)) }
+    if (minTime !=="") {
+        query = query.concat('AND CalculateRouteTime(r.ROUTE_ID) >= ? ');
+        filters.push(parseInt(minTime, 10)) }
+    if (maxTime !=="") {
+        query = query.concat('AND CalculateRouteTime(r.ROUTE_ID) <= ? ');
+        filters.push(parseInt(maxTime, 10)) }
+    if (ieSelectors.length > 0) {
+        query = query.concat('AND EXISTS(SELECT * FROM MalfunctioningRoutes mr WHERE mr.ROUTE_ID = r.ROUTE_ID AND mr.MALFUNCTION_TYPE IN (?))');
+        filters.push(ieSelectors) }
 
-    db.query(query, [minLength, maxLength, minTime, maxTime, ieSelectors], (err, results) => {
+    db.query(query, filters, (err, results) => {
         if (err) {
             console.error('Error retrieving data from routes table:', err);
             callback(err, null);
