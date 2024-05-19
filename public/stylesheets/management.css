@@ -30,6 +30,8 @@ main {
     padding: 10px;
     margin-bottom: 0;
     border-bottom: 3px dashed black;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 #chosen-stretches-list
