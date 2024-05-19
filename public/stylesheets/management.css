@@ -26,32 +26,50 @@ main {
     overflow: auto;
 }
 
-#available-stretches-list
+#available-stretches-list, #chosen-stretches-list
 {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    margin-bottom: 0;
+    border-bottom: 3px dashed black;
+}
+
+#chosen-stretches-list
+{
+    margin-top: 0;
 }
 
 .stretch
 {
     list-style-type: none;
-    background: rgb(55, 180, 225);
     border-radius: 2vh;
     height: 4vh;
     width: 75%;
     margin: 5px 0;
-    border: 1px solid rgb(80, 30, 100);
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
 }
 
-.stretch:hover
+#available-stretches-list .stretch
+{
+    background: rgb(55, 180, 225);
+    border: 1px solid rgb(80, 30, 100);
+}
+
+#chosen-stretches-list .stretch
+{
+    background-color: rgb(34 34 34);
+    color: rgb(221 221 221);
+}
+
+#available-stretches-list .stretch:hover
 {
     background: rgb(80, 30, 100);
+    color: rgb(221 221 221);
 }
 
 h2
