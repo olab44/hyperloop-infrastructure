@@ -120,14 +120,14 @@ function getMalfunctionsByRoute(callback){
 
 function getAllStretches(callback) {
     const db = connect();
-    const query = `SELECT s.STRETCH_ID, st1.NAME AS START_STATION, st2.NAME AS END_STATION
+    const query = `SELECT s.STRETCH_ID, s.LENGTH, s.MAX_SPEED, st1.NAME AS START_STATION, st2.NAME AS END_STATION
                    FROM STRETCH s
                    JOIN STATION st1 ON s.START_STATION_FK = st1.STATION_ID
                    JOIN STATION st2 ON s.END_STATION_FK = st2.STATION_ID`;
 
     db.query(query, (err, results) => {
         if (err) {
-            console.error('Error retrieving data from routes table:', err);
+            console.error('Error retrieving data from stretches table:', err);
             callback(err, null);
         } else {
             callback(null, results);
@@ -136,6 +136,8 @@ function getAllStretches(callback) {
         db.end();
     });
 }
+
+
 
 function addRoute(name, stretches, callback) {
     const db = connect();

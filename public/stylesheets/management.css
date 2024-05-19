@@ -54,8 +54,22 @@ main {
     background: rgb(80, 30, 100);
 }
 
-
 h2
 {
+    text-align: center;
+}
+
+#stretch-info {
+    width: 100%;
+    border-top: solid 5px black;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background: #ddd;
+}
+
+#stretch-info h3 {
+    width: 100%;
     text-align: center;
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hyperloop Infrastructure Management</title>
-    <link rel="shorcut icon" type="image/x-icon" href="images/hyperloop.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/hyperloop.ico" />
     <link rel="stylesheet" href="stylesheets/basic_design.css" />
     <link rel="stylesheet" href="stylesheets/management.css" />
   </head>
@@ -22,74 +22,45 @@
         <div class="welcome-box">
           <h1>MANAGEMENT</h1>
         </div>
-        <main>
+        <main class="management">
           <section class="operations">
             <h2>Create New Route</h2>
             <form id="add-route-form">
-              <input
-                type="text"
-                id="route-name"
-                placeholder="Route Name"
-                maxlength="20"
-                required
-              />
+              <input type="text" id="route-name" placeholder="Route Name" maxlength="20" required />
               <ul id="available-stretches-list"></ul>
               <ol id="chosen-stretches-list"></ol>
               <button type="submit">Add Route</button>
             </form>
           </section>
-
           <section class="operations">
             <div>
               <h2>Delete Route</h2>
               <form id="delete-route-form">
-                <input
-                  type="number"
-                  id="delete-route-id"
-                  placeholder="Route ID"
-                  required
-                />
+                <input type="number" id="delete-route-id" placeholder="Route ID" required />
                 <button type="submit">Delete Route</button>
               </form>
             </div>
             <div>
               <h2>Assign Capsule to Route</h2>
               <form id="assign-capsule-form">
-                <input
-                  type="number"
-                  id="assign-route-id"
-                  placeholder="Route ID"
-                  required
-                />
-                <input
-                  type="number"
-                  id="capsule-id"
-                  placeholder="Capsule ID"
-                  required
-                />
+                <input type="number" id="assign-route-id" placeholder="Route ID" required />
+                <input type="number" id="capsule-id" placeholder="Capsule ID" required />
                 <button type="submit">Assign Capsule</button>
               </form>
             </div>
             <div>
               <h2>Update Infrastructure State</h2>
               <form id="update-state-form">
-                <input
-                  type="number"
-                  id="element-id"
-                  placeholder="Element ID"
-                  required
-                />
-                <input
-                  type="text"
-                  id="new-state"
-                  placeholder="New State"
-                  required
-                />
+                <input type="number" id="element-id" placeholder="Element ID" required />
+                <input type="text" id="new-state" placeholder="New State" required />
                 <button type="submit">Update State</button>
               </form>
             </div>
           </section>
         </main>
+        <div id="stretch-info">
+          <p>Select a stretch to see details.</p>
+        </div>
       </div>
     </div>
     <script src="scripts/management.js"></script>

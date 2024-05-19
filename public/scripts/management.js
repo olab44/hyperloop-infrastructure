@@ -8,10 +8,15 @@ function displayStretches(stretches) {
         const stretchElement = document.createElement('li');
         stretchElement.classList.add('stretch');
         stretchElement.innerHTML = `${stretch.STRETCH_ID} | ${stretch.START_STATION} --> ${stretch.END_STATION}`;
+        
+        stretchElement.addEventListener('click', function() {
+            displayStretchInfo(stretch);
+        });
+        
         stretchElement.addEventListener('dblclick', function() {
             chosen_stretches.push(stretch);
             const chosen_stretches_list = document.getElementById("chosen-stretches-list");
-            chosen_stretches_list.appendChild(stretchElement);
+            chosen_stretches_list.appendChild(stretchElement.cloneNode(true));
             displayStretches(stretches);
         });
 
@@ -23,6 +28,19 @@ function displayStretches(stretches) {
         available_stretches_list.appendChild(stretchElement);
     });
 }
+
+function displayStretchInfo(stretch) {
+    const stretchInfoPanel = document.getElementById('stretch-info');
+    stretchInfoPanel.innerHTML = `
+        <h3>Stretch Details</h3>
+        <p>ID: ${stretch.STRETCH_ID}</p>
+        <p>Start Station: ${stretch.START_STATION}</p>
+        <p>End Station: ${stretch.END_STATION}</p>
+        <p>Length: ${stretch.LENGTH} km</p>
+        <p>Max Speed: ${stretch.MAX_SPEED} km/h</p>
+    `;
+}
+
 
 function fetchAndDisplayStretches() {
     fetch('/stretches')
