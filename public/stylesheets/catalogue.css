@@ -19,6 +19,9 @@
     border: double black;
     border-width: 5px 0px;
 }
+#route-catalogue li:hover{
+    cursor: pointer;
+}
 .route-info {
     display: flex;
 }
@@ -29,4 +32,23 @@
 
 .filters-menu {
     flex: 2;
+    background-color: #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.filters-menu h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.filters-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.filters-menu li {
+    color: #666;
+    padding: 5px 0;
 }

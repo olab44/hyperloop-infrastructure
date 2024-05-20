@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "express": "^4.19.2",
-    "mysql2": "^3.9.7"
+    "mysql2": "^3.0.0"
   },
   "name": "bd2-hyperloop",
   "description": "BD2 Project - Hyperloop Infrastructure",

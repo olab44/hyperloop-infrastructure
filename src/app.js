@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require("path");
 
-const { connect, getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure, checkRouteStatus, getAllMalfunctions, getMalfunctionsByRoute } = require('./connect_database');
+const { connect, getAllRoutes, getAllStretches, addRoute, deleteRoute, assignCapsule, updateInfrastructure, checkRouteStatus, getAllMalfunctions, getMalfunctionsByRoute, getRouteStations, getRouteCapsules } = require('./connect_database');
 
 const app = express();
 
@@ -120,6 +120,32 @@ app.post('/update-infrastructure', (req, res) => {
             res.json({ message: 'state updated successfully' });
         }
     })
+});
+
+app.get('/route-stations/:routeId', (req, res) => {
+    const routeId = req.params.routeId;
+
+    getRouteStations(routeId, (err, route) => {
+        if (err) {
+            console.error('Error fetching route:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(route);
+        }
+    });
+});
+
+app.get('/route-capsules/:routeId', (req, res) => {
+    const routeId = req.params.routeId;
+
+    getRouteCapsules(routeId, (err, route) => {
+        if (err) {
+            console.error('Error fetching route:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(route);
+        }
+    });
 });
 
 

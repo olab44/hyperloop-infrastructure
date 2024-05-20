@@ -67,7 +67,7 @@ function getMalfunctionsByRoute(callback){
                     JOIN INFRASTRUCTURE_ELEMENT ie ON ie.STRETCH_FK = rs.STRETCH_ID\
                     JOIN MALFUNCTION m ON m.ELEMENT_FK=ie.ELEMENT_ID\
                     GROUP BY mf.ROUTE_ID';
-    
+
     db.query(query, (err, results) => {
         if (err) {
             console.error('Error retrieving data from malfunction table or fetching malfunctioning routes:', err);
@@ -172,6 +172,39 @@ function checkRouteStatus(callback) {
     });
 }
 
+function getRouteStations(routeId, callback) {
+    const db = connect();
+    const query = 'SELECT DISTINCT s.STATION_ID, s.NAME FROM STATION s\
+    JOIN STRETCH st ON s.STATION_ID = st.START_STATION_FK OR s.STATION_ID = st.END_STATION_FK\
+    JOIN ROUTE_STRETCH rs ON st.STRETCH_ID = rs.STRETCH_ID\
+    WHERE rs.ROUTE_ID = ?';
+    db.query(query, [routeId], (err, results) => {
+        if (err) {
+            console.error('Error selecting route:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
+function getRouteCapsules(routeId, callback) {
+    const db = connect();
+    const query = 'SELECT CAPSULE_ID, NAME FROM CAPSULE WHERE ROUTE_ID = ?';
+    db.query(query, [routeId], (err, results) => {
+        if (err) {
+            console.error('Error selecting route:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
 
 
 module.exports = {
@@ -184,5 +217,7 @@ module.exports = {
     deleteRoute,
     assignCapsule,
     updateInfrastructure,
-    checkRouteStatus
+    checkRouteStatus,
+    getRouteStations,
+    getRouteCapsules
 };
