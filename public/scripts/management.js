@@ -76,6 +76,12 @@ function fetchAndDisplayStretches() {
         });
 }
 
+function resetAddForm() {
+    chosen_stretches = [];
+    document.getElementById("chosen-stretches-list").innerHTML = "";
+    document.getElementById('route-name').value = "";
+}
+
 function addRoute() {
     const routeName = document.getElementById('route-name').value;
     let stretch_ids = chosen_stretches.map(stretch => stretch.STRETCH_ID);
@@ -89,9 +95,7 @@ function addRoute() {
     .then(data => { alert('Route added successfully'); })
     .catch(error => {console.error('Error adding route:', error);});
 
-    chosen_stretches = [];
-    document.getElementById("chosen-stretches-list").innerHTML = "";
-    document.getElementById('route-name').value = "";
+    resetAddForm();
     fetchAndDisplayStretches();
 }
 
@@ -145,6 +149,10 @@ document.getElementById('update-state-form').addEventListener('submit', function
 document.getElementById('add-route-form').addEventListener('submit', function(e) {
     e.preventDefault();
     if (chosen_stretches.length > 0) { addRoute(); }
+});
+document.getElementById('add-route-form').addEventListener('reset', function(e) {
+    e.preventDefault();
+    resetAddForm();
 });
 
 document.getElementById('delete-route-form').addEventListener('submit', function(e) {
