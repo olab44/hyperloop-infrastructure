@@ -5,11 +5,24 @@ main {
     overflow: hidden;
 }
 
+button
+{
+    margin: 5px;
+    /* border-radius: 2px; */
+}
+
+form
+{
+    display: flex;
+    flex-direction: row;
+}
+
 input {
     border: 1px solid rgb(55, 180, 225);
     border-radius: 5px;
     padding: 0.5em 0.75em;
     transition: border-color 0.2s, box-shadow 0.2s;
+    margin: 5px;
 }
 input:focus {
     border: 1px solid rgb(80, 30, 100);
@@ -26,11 +39,21 @@ input:focus {
     background: #ddd;
     border: solid 5px black;
     border-radius: 5px;
-    text-align: center;
     margin: 15px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
 }
+
+.operation
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 #add-route-form {
     overflow: hidden;
     display: flex;
@@ -84,6 +107,7 @@ li.disabled {
 h2
 {
     text-align: center;
+    width: 100%;
 }
 
 #details-panel {
