@@ -192,7 +192,9 @@ function getRouteStations(routeId, callback) {
 
 function getRouteCapsules(routeId, callback) {
     const db = connect();
-    const query = 'SELECT CAPSULE_ID, NAME FROM CAPSULE WHERE ROUTE_ID = ?';
+    const query = 'SELECT c.CAPSULE_ID, c.NAME FROM CAPSULE c\
+    JOIN ROUTE_CAPSULE rc ON c.CAPSULE_ID = rc.CAPSULE_ID\
+    JOIN ROUTE r ON rc.CAPSULE_ID = r.ROUTE_ID WHERE ROUTE_ID = ?';
     db.query(query, [routeId], (err, results) => {
         if (err) {
             console.error('Error selecting route:', err);
