@@ -5,11 +5,11 @@ function displayMalfunctions(malfunctions){
     malfunctions.forEach(malfunction => {
         const malfunctionElement = document.createElement('li');
         malfunctionElement.classList.add('malfunction');
-        const isMalfunctionOngoing = !(malfunction.rdate); 
+        const isMalfunctionOngoing = !(malfunction.rdate);
         const malfunctionStatus = isMalfunctionOngoing ? "Ongoing" : "Fixed";
 
         malfunctionElement.innerHTML = '<div class="czemuniedziala"></div>';
-        
+
         if (isMalfunctionOngoing){
             malfunctionElement.innerHTML = `
                 <div class="malfunction-info">

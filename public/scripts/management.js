@@ -9,18 +9,17 @@ function displayStretches(stretches) {
         stretchElement.classList.add('stretch');
         stretchElement.innerHTML = `${stretch.STRETCH_ID} | ${stretch.START_STATION} --> ${stretch.END_STATION}`;
 
-        stretchElement.addEventListener('click', function() {
-            displayStretchInfo(stretch);
-        });
-
-        stretchElement.addEventListener('dblclick', function() {
-            chosen_stretches.push(stretch);
-            const chosen_stretches_list = document.getElementById("chosen-stretches-list");
-            chosen_stretches_list.appendChild(stretchElement.cloneNode(true));
-            displayStretches(stretches);
-        });
+        stretchElement.addEventListener('click', function() { displayStretchInfo(stretch); });
 
         const lastChosen = chosen_stretches[chosen_stretches.length - 1];
+        if (!(lastChosen && stretch.START_STATION !== lastChosen.END_STATION)) {
+            stretchElement.addEventListener('dblclick', function() {
+                chosen_stretches.push(stretch);
+                const chosen_stretches_list = document.getElementById("chosen-stretches-list");
+                chosen_stretches_list.appendChild(stretchElement.cloneNode(true));
+                displayStretches(stretches);
+            });
+        }
         if (lastChosen && stretch.START_STATION !== lastChosen.END_STATION) {
             stretchElement.classList.add('disabled');
         }
@@ -30,7 +29,7 @@ function displayStretches(stretches) {
 }
 
 function displayStretchIE(stretch_ie) {
-    document.querySelectorAll("#stretch-ie-panel ui").forEach(function(list) { list.innerHTML = '' });
+    document.querySelectorAll("#stretch-ie-panel ul").forEach(function(list) { list.innerHTML = '' });
     stretch_ie.forEach(ie => {
         const ieElement = document.createElement('li');
         ieElement.classList.add('ie');
