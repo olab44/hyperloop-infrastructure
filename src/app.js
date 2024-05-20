@@ -63,8 +63,8 @@ app.delete('/routes/:routeId', (req, res) => {
     const routeId = req.params.routeId;
     deleteRoute(routeId, (err, result) => {
         if (err) {
-            console.error('Error deleting route:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
+            // console.error('Error deleting route:', err);
+            res.status(500).json({ error: 'Error deleting route, your route not found' });
         } else {
             res.json({ message: 'Route deleted successfully' });
         }
@@ -94,33 +94,27 @@ app.get('/malfunctions-by-routes', (req, res) => {
     });
 });
 
-
 app.post('/routes/assign', (req, res) => {
     const routeId = req.body.routeId;
     const capsuleId = req.body.capsuleId;
-
     assignCapsule(routeId, capsuleId, (err, result) => {
         if (err) {
-            console.error('Error assigning capsule:', err);
-            res.status(500).json({ error: 'Error assiging capsule' });
+            res.status(500).json({ error: 'Error assiging capsule, please try again' });
         } else {
             res.json({ message: 'capsule assigned successfully' });
         }
     })
-
-    res.json({ success: true });
 });
 
 app.post('/update-infrastructure', (req, res) => {
     const { elementId, newState } = req.body;
     updateInfrastructure(elementId, newState, (err, result) => {
         if (err) {
-            console.error('Error updating state:', err);
-            res.status(500).json({ error: 'Error updating state' });
+            res.status(500).json({ error: err.message });
         } else {
-            res.json({ message: 'state updated successfully' });
+            res.json({ message: 'State updated successfully' });
         }
-    })
+    });
 });
 
 app.post('/stretch-ie', (req, res) => {
@@ -134,7 +128,6 @@ app.post('/stretch-ie', (req, res) => {
         }
     });
 });
-
 
 const PORT = 4000;
 app.listen(PORT, () => {

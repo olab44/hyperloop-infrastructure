@@ -144,7 +144,7 @@ function addRoute(name, stretches, callback) {
     const query = 'CALL AddRoute(?,?)';
     db.query(query, [name, stretches], (err, results) => {
         if (err) {
-            console.error('Error adding route:', err);
+            // console.error('Error adding route:', err);
             callback(err, null);
         } else {
             callback(null, results);
@@ -159,8 +159,9 @@ function deleteRoute(routeId, callback) {
     const query = 'CALL DeleteRoute(?)';
     db.query(query, [routeId], (err, results) => {
         if (err) {
-            console.error('Error deleting route:', err);
             callback(err, null);
+        } else if (results.affectedRows == 0) {
+            callback(new Error('Route does not exist'), null);
         } else {
             callback(null, results);
         }
@@ -175,7 +176,7 @@ function assignCapsule(routeId, capsuleId, callback) {
     const query = 'CALL AssignCapsuleToRoute(?, ?)';
     db.query(query, [routeId, capsuleId], (err, results) => {
         if (err) {
-            console.error('Error assigning capsule:', err);
+            // console.error('Error assigning capsule:', err);
             callback(err, null);
         } else {
             callback(null, results);
@@ -186,18 +187,24 @@ function assignCapsule(routeId, capsuleId, callback) {
 }
 
 function updateInfrastructure(elementId, newState, callback) {
+    const validStates = ['A', 'B'];
+    if (!validStates.includes(newState)) {
+        return callback(new Error('Invalid state'), null);
+    }
     const db = connect();
     const query = 'CALL UpdateInfrastructureState(?, ?)';
     db.query(query, [elementId, newState], (err, results) => {
         if (err) {
-            console.error('Error changing status:', err);
             callback(err, null);
+        } else if (results.affectedRows == 0) {
+            callback(new Error('ElementID not found, try again'), null);
         } else {
             callback(null, results);
         }
         db.end();
     });
 }
+
 
 function getStretchElements(stretchId, callback) {
     const db = connect();

@@ -106,8 +106,17 @@ function deleteRoute() {
         method: 'DELETE'
     })
     .then(response => response.json())
-    .then(data => { alert('Route deleted successfully'); })
-    .catch(error => { console.error('Error deleting route:', error); });
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        }
+        else {
+            alert(data.message);
+        }
+    })
+    .catch(error => { 
+        alert('Please try again');
+    });
 }
 
 function assignCapsuleToRoute() {
@@ -120,8 +129,16 @@ function assignCapsuleToRoute() {
         body: JSON.stringify({ routeId, capsuleId })
     })
     .then(response => response.json())
-    .then(data => { alert('Capsule assigned to route successfully'); })
-    .catch(error => { console.error('Error assigning capsule to route:', error); });
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        alert('Please try again later.');
+    });
 }
 
 function updateInfrastructureState() {
@@ -130,20 +147,22 @@ function updateInfrastructureState() {
 
     fetch('/update-infrastructure', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ elementId, newState })
     })
     .then(response => response.json())
-    .then(data => { alert('Infrastructure state updated successfully'); })
-    .catch(error => { console.error('Error updating infrastructure state:', error); });
+    .then(data => {
+        if (data.error) {
+            alert(`Error: ${data.error}`);
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        // console.error('Error updating infrastructure state:', error);
+        alert('Please try again later.');
+    });
 }
-
-document.getElementById('update-state-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    updateInfrastructureState();
-});
 
 
 document.getElementById('add-route-form').addEventListener('submit', function(e) {
