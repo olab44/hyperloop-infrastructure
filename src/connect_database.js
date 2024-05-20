@@ -200,6 +200,21 @@ function assignCapsule(routeId, capsuleId, callback) {
     });
 }
 
+function unassignCapsule(routeId, capsuleId, callback) {
+    const db = connect();
+    const query = 'CALL UnassignCapsuleFromRoute(?, ?)';
+    db.query(query, [routeId, capsuleId], (err, results) => {
+        if (err) {
+            // console.error('Error unassigning capsule:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
 function updateInfrastructure(elementId, newState, callback) {
     const validStates = ['A', 'B'];
     if (!validStates.includes(newState)) {
@@ -252,4 +267,6 @@ module.exports = {
     assignCapsule,
     updateInfrastructure,
     getStretchElements,
+    unassignCapsule
+
 };

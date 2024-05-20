@@ -184,15 +184,12 @@ h2
 }
 
 #capsule-box {
+    height: 12vh;
     width: 85%;
     overflow-y: scroll;
     scrollbar-width: none;
     padding: 0 20px;
     margin-bottom: 20px;
-}
-
-#capsule-box::-webkit-scrollbar {
-    display: none;
 }
 
 .capsule {

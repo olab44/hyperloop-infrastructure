@@ -32,19 +32,24 @@ END //
 -- Assign capsule to route
 CREATE PROCEDURE AssignCapsuleToRoute(
     IN p_route_id INT,
+    IN p_capsule_id INT)
+BEGIN
+    IF EXISTS(SELECT ROUTE_ID FROM ROUTE WHERE ROUTE_ID = p_route_id)
+    AND EXISTS(SELECT CAPSULE_ID FROM CAPSULE WHERE CAPSULE_ID = p_capsule_id)
+    AND NOT EXISTS(SELECT ROUTE_ID, CAPSULE_ID FROM ROUTE_CAPSULE WHERE ROUTE_ID = p_route_id AND CAPSULE_ID = p_capsule_id)
+    THEN
+        INSERT INTO ROUTE_CAPSULE (ROUTE_ID, CAPSULE_ID) VALUES (p_route_id, p_capsule_id);
+    END IF;
+END //
+
+CREATE PROCEDURE UnassignCapsuleFromRoute(
+    IN p_route_id INT,
     IN p_capsule_id INT
 )
 BEGIN
-    INSERT INTO ROUTE_CAPSULE (ROUTE_ID, CAPSULE_ID)
-    VALUES (p_route_id, p_capsule_id);
+    DELETE FROM ROUTE_CAPSULE WHERE ROUTE_ID = p_route_id AND CAPSULE_ID = p_capsule_id;
 END //
 
-CREATE PROCEDURE UpdateInfrastructureState(IN elementId INT, IN newState VARCHAR(1))
-BEGIN
-    UPDATE INFRASTRUCTURE_ELEMENT
-    SET STATUS = newState
-    WHERE ELEMENT_ID = elementId;
-END //
 
 --update infrastructure element state
 CREATE PROCEDURE UpdateInfrastructureState(IN elementId INT, IN newState VARCHAR(1))

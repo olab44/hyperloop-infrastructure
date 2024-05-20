@@ -4,7 +4,7 @@ const path = require("path");
 
 const { getAllRoutes, getFilteredRoutes, getAllStretches, getAllMalfunctions, getMalfunctionsByRoute,
         addRoute, deleteRoute, assignCapsule, updateInfrastructure, getStretchElements,
-        getCapsules} = require('./connect_database');
+        getCapsules, unassignCapsule} = require('./connect_database');
 
 const app = express();
 
@@ -113,7 +113,18 @@ app.post('/routes/assign', (req, res) => {
         if (err) {
             res.status(500).json({ error: 'Error assiging capsule, please try again' });
         } else {
-            res.json({ message: 'capsule assigned successfully' });
+            res.json({ message: 'Capsule assigned successfully' });
+        }
+    })
+});
+app.post('/routes/unassign', (req, res) => {
+    const routeId = req.body.routeId;
+    const capsuleId = req.body.capsuleId;
+    unassignCapsule(routeId, capsuleId, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error unassiging capsule, please try again' });
+        } else {
+            res.json({ message: 'Capsule unassigned successfully' });
         }
     })
 });

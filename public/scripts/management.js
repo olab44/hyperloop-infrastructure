@@ -113,7 +113,7 @@ function deleteRoute() {
             alert(data.message);
         }
     })
-    .catch(error => { 
+    .catch(error => {
         alert('Please try again');
     });
 }
@@ -138,6 +138,30 @@ function assignCapsuleToRoute() {
     .catch(error => {
         alert('Please try again later.');
     });
+}
+
+function unassignCapsuleFromRoute() {
+    const routeId = document.getElementById('assign-route-id').value;
+    const capsuleId = document.getElementById('capsule-id').value;
+
+    if (routeId !== "" && capsuleId !=="") {
+        fetch('/routes/unassign', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ routeId, capsuleId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) { alert(data.error); }
+            else { alert(data.message); }
+        })
+        .catch(error => {
+            alert('Please try again later.');
+        });
+
+        routeId.value = "";
+        capsuleId.value = "";
+    }
 }
 
 function updateInfrastructureState() {
@@ -213,6 +237,11 @@ document.getElementById('delete-route-form').addEventListener('submit', function
 document.getElementById('assign-capsule-form').addEventListener('submit', function(e) {
     e.preventDefault();
     assignCapsuleToRoute();
+});
+
+document.getElementById('unassign-capsule-button').addEventListener('click', function(e) {
+    e.preventDefault();
+    unassignCapsuleFromRoute();
 });
 
 document.getElementById('update-state-form').addEventListener('submit', function(e) {
