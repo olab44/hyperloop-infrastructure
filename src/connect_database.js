@@ -137,6 +137,20 @@ function getAllStretches(callback) {
     });
 }
 
+function getCapsules(callback) {
+    const db = connect();
+    const query = `SELECT * FROM CAPSULE`;
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Error retrieving data from db:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+        db.end();
+    });
+}
+
 
 
 function addRoute(name, stretches, callback) {
@@ -230,6 +244,7 @@ module.exports = {
     getAllRoutes,
     getFilteredRoutes,
     getAllStretches,
+    getCapsules,
     addRoute,
     getAllMalfunctions,
     getMalfunctionsByRoute,

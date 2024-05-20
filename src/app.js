@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const path = require("path");
 
 const { getAllRoutes, getFilteredRoutes, getAllStretches, getAllMalfunctions, getMalfunctionsByRoute,
-        addRoute, deleteRoute, assignCapsule, updateInfrastructure, getStretchElements} = require('./connect_database');
+        addRoute, deleteRoute, assignCapsule, updateInfrastructure, getStretchElements,
+        getCapsules} = require('./connect_database');
 
 const app = express();
 
@@ -55,6 +56,17 @@ app.get('/stretches', (req, res) => {
             res.status(500).json({ error: 'Error fetching stretches' });
         } else {
             res.json(routes);
+        }
+    });
+});
+
+app.get('/capsules', (req, res) => {
+    getCapsules((err, capsules) => {
+        if (err) {
+            console.error('Error fetching capsules:', err);
+            res.status(500).json({ error: 'Error fetching capsules' });
+        } else {
+            res.json(capsules);
         }
     });
 });

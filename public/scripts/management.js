@@ -64,7 +64,6 @@ function displayStretchInfo(stretch) {
     .catch(error => { console.error('Error fetching/displaying infrastructure elements', error); });
 }
 
-
 function fetchAndDisplayStretches() {
     fetch('/stretches')
         .then(response => response.json())
@@ -164,11 +163,43 @@ function updateInfrastructureState() {
     });
 }
 
+function displayCapsules(capsules) {
+    const capsuleBox = document.getElementById("capsule-box");
+    capsuleBox.innerHTML = '';
+
+    capsules.forEach(capsule => {
+        const capsuleElement = document.createElement('div');
+        capsuleElement.classList.add('capsule');
+        capsuleElement.innerHTML = `
+            <p>${capsule.CAPSULE_ID}</p>
+            <p>${capsule.NAME}</p>
+            <p>${capsule.TYPE}</p>
+        `;
+        capsuleBox.appendChild(capsuleElement);
+    });
+}
+
+
+function fetchAndDisplayCapsules() {
+    console.log("Fetching capsules...");
+    fetch('/capsules')
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            displayCapsules(data);
+        })
+        .catch(error => {
+            console.error('Error fetching capsules:', error);
+        });
+}
+
 
 document.getElementById('add-route-form').addEventListener('submit', function(e) {
     e.preventDefault();
     if (chosen_stretches.length > 0) { addRoute(); }
 });
+
 document.getElementById('add-route-form').addEventListener('reset', function(e) {
     e.preventDefault();
     resetAddForm();
@@ -190,3 +221,4 @@ document.getElementById('update-state-form').addEventListener('submit', function
 });
 
 fetchAndDisplayStretches();
+fetchAndDisplayCapsules();
