@@ -54,6 +54,7 @@ input:focus {
 }
 
 #add-route-form {
+    width: 85%;
     overflow: hidden;
     display: flex;
     flex-direction: column;

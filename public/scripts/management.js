@@ -80,6 +80,7 @@ function resetAddForm() {
     chosen_stretches = [];
     document.getElementById("chosen-stretches-list").innerHTML = "";
     document.getElementById('route-name').value = "";
+    fetchAndDisplayStretches();
 }
 
 function addRoute() {
@@ -96,7 +97,6 @@ function addRoute() {
     .catch(error => {console.error('Error adding route:', error);});
 
     resetAddForm();
-    fetchAndDisplayStretches();
 }
 
 function deleteRoute() {
