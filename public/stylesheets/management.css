@@ -43,7 +43,6 @@ input:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
 }
 
 .operation
@@ -71,7 +70,7 @@ input:focus {
 .stretch
 {
     list-style-type: none;
-    border-radius: 2vh;
+    border-radius: 1.5vh;
     height: 4vh;
     padding: 5px 10px;
     margin-bottom: 10px;
@@ -132,7 +131,9 @@ h2
     margin: 5px;
 }
 #stretch-info p {
+    flex: 1;
     margin: 5px;
+    padding-left: 15px;
 }
 #stretch-ie-panel {
     height: 45%;

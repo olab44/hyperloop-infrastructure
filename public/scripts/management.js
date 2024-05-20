@@ -33,7 +33,7 @@ function displayStretchIE(stretch_ie) {
     stretch_ie.forEach(ie => {
         const ieElement = document.createElement('li');
         ieElement.classList.add('ie');
-        const ieStatus = ie.STATUS == 'B' ? 'Out-Of-Order' : 'Functional';
+        const ieStatus = ie.STATUS == 'A' ? 'Functional' : 'Out-Of-Order';
         ieElement.innerHTML =  `
             <span>${ie.ELEMENT_ID} | ${ie.NAME}</span>
             <span class="${ieStatus}">${ieStatus}</span>
@@ -122,7 +122,7 @@ function assignCapsuleToRoute() {
 
 function updateInfrastructureState() {
     const elementId = document.getElementById('element-id').value;
-    const newState = document.getElementById('new-state').value;
+    const newState = document.getElementById('new-state').value.toUpperCase();
 
     fetch('/update-infrastructure', {
         method: 'POST',
