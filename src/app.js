@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const path = require("path");
 
 const { getAllRoutes, getFilteredRoutes, getAllStretches, getAllMalfunctions, getMalfunctionsByRoute,
-        addRoute, deleteRoute, assignCapsule, updateInfrastructure, getStretchElements} = require('./connect_database');
+        addRoute, deleteRoute, assignCapsule, updateInfrastructure, getStretchElements,
+        getCapsules, unassignCapsule} = require('./connect_database');
 
 const app = express();
 
@@ -59,6 +60,17 @@ app.get('/stretches', (req, res) => {
     });
 });
 
+app.get('/capsules', (req, res) => {
+    getCapsules((err, capsules) => {
+        if (err) {
+            console.error('Error fetching capsules:', err);
+            res.status(500).json({ error: 'Error fetching capsules' });
+        } else {
+            res.json(capsules);
+        }
+    });
+});
+
 app.delete('/routes/:routeId', (req, res) => {
     const routeId = req.params.routeId;
     deleteRoute(routeId, (err, result) => {
@@ -101,7 +113,18 @@ app.post('/routes/assign', (req, res) => {
         if (err) {
             res.status(500).json({ error: 'Error assiging capsule, please try again' });
         } else {
-            res.json({ message: 'capsule assigned successfully' });
+            res.json({ message: 'Capsule assigned successfully' });
+        }
+    })
+});
+app.post('/routes/unassign', (req, res) => {
+    const routeId = req.body.routeId;
+    const capsuleId = req.body.capsuleId;
+    unassignCapsule(routeId, capsuleId, (err, result) => {
+        if (err) {
+            res.status(500).json({ error: 'Error unassiging capsule, please try again' });
+        } else {
+            res.json({ message: 'Capsule unassigned successfully' });
         }
     })
 });

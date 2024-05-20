@@ -64,7 +64,6 @@ function displayStretchInfo(stretch) {
     .catch(error => { console.error('Error fetching/displaying infrastructure elements', error); });
 }
 
-
 function fetchAndDisplayStretches() {
     fetch('/stretches')
         .then(response => response.json())
@@ -114,7 +113,7 @@ function deleteRoute() {
             alert(data.message);
         }
     })
-    .catch(error => { 
+    .catch(error => {
         alert('Please try again');
     });
 }
@@ -141,6 +140,30 @@ function assignCapsuleToRoute() {
     });
 }
 
+function unassignCapsuleFromRoute() {
+    const routeId = document.getElementById('assign-route-id').value;
+    const capsuleId = document.getElementById('capsule-id').value;
+
+    if (routeId !== "" && capsuleId !=="") {
+        fetch('/routes/unassign', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ routeId, capsuleId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) { alert(data.error); }
+            else { alert(data.message); }
+        })
+        .catch(error => {
+            alert('Please try again later.');
+        });
+
+        routeId.value = "";
+        capsuleId.value = "";
+    }
+}
+
 function updateInfrastructureState() {
     const elementId = document.getElementById('element-id').value;
     const newState = document.getElementById('new-state').value.toUpperCase();
@@ -164,11 +187,43 @@ function updateInfrastructureState() {
     });
 }
 
+function displayCapsules(capsules) {
+    const capsuleBox = document.getElementById("capsule-box");
+    capsuleBox.innerHTML = '';
+
+    capsules.forEach(capsule => {
+        const capsuleElement = document.createElement('div');
+        capsuleElement.classList.add('capsule');
+        capsuleElement.innerHTML = `
+            <p>${capsule.CAPSULE_ID}</p>
+            <p>${capsule.NAME}</p>
+            <p>${capsule.TYPE}</p>
+        `;
+        capsuleBox.appendChild(capsuleElement);
+    });
+}
+
+
+function fetchAndDisplayCapsules() {
+    console.log("Fetching capsules...");
+    fetch('/capsules')
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            displayCapsules(data);
+        })
+        .catch(error => {
+            console.error('Error fetching capsules:', error);
+        });
+}
+
 
 document.getElementById('add-route-form').addEventListener('submit', function(e) {
     e.preventDefault();
     if (chosen_stretches.length > 0) { addRoute(); }
 });
+
 document.getElementById('add-route-form').addEventListener('reset', function(e) {
     e.preventDefault();
     resetAddForm();
@@ -184,9 +239,15 @@ document.getElementById('assign-capsule-form').addEventListener('submit', functi
     assignCapsuleToRoute();
 });
 
+document.getElementById('unassign-capsule-button').addEventListener('click', function(e) {
+    e.preventDefault();
+    unassignCapsuleFromRoute();
+});
+
 document.getElementById('update-state-form').addEventListener('submit', function(e) {
     e.preventDefault();
     updateInfrastructureState();
 });
 
 fetchAndDisplayStretches();
+fetchAndDisplayCapsules();
