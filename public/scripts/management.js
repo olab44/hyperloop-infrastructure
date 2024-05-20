@@ -158,9 +158,6 @@ function unassignCapsuleFromRoute() {
         .catch(error => {
             alert('Please try again later.');
         });
-
-        routeId.value = "";
-        capsuleId.value = "";
     }
 }
 
