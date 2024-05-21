@@ -1,6 +1,51 @@
-function displayRouteDetails(routeID) {
+function displayRouteDetails(routeId, routeName) {
+    Promise.all([
+        fetch(`/route-stations/${routeId}`).then(response => response.json()),
+        fetch(`/route-capsules/${routeId}`).then(response => response.json())
+    ]).then(([stations, capsules]) => {
+        const detailsPanel = document.querySelector('#details-panel');
+        detailsPanel.innerHTML = '';
 
+        const routeTitle = document.createElement('h3');
+        routeTitle.textContent = `Route Details: ${routeName}`;
+        detailsPanel.appendChild(routeTitle);
+
+        // Create and append stations title
+        const stationsTitle = document.createElement('h3');
+        stationsTitle.textContent = 'Stations in order:';
+        detailsPanel.appendChild(stationsTitle);
+
+        // Create and append stations list
+        const stationsList = document.createElement('div');
+        stationsList.classList.add('inline-list');
+        stations.forEach((station, index) => {
+            const stationText = document.createElement('span');
+            stationText.textContent = `${index + 1}. ID: ${station.STATION_ID}, Name: ${station.NAME}`;
+            stationsList.appendChild(stationText);
+        });
+        detailsPanel.appendChild(stationsList);
+
+        // Create and append capsules title
+        const capsulesTitle = document.createElement('h3');
+        capsulesTitle.textContent = 'Assigned Capsules:';
+        detailsPanel.appendChild(capsulesTitle);
+
+        // Create and append capsules list
+        const capsulesList = document.createElement('div');
+        capsulesList.classList.add('inline-list');
+        capsules.forEach((capsule) => {
+            const capsuleText = document.createElement('span');
+            capsuleText.textContent = `ID: ${capsule.CAPSULE_ID}, Name: ${capsule.NAME}`;
+            capsulesList.appendChild(capsuleText);
+        });
+        detailsPanel.appendChild(capsulesList);
+
+    })
+    .catch(error => {
+        console.error('Error fetching/displaying route details:', error);
+    });
 }
+
 
 function displayRoutes(routes) {
     const routeCatalogue = document.getElementById("route-catalogue");
@@ -17,7 +62,18 @@ function displayRoutes(routes) {
                 <span>Length [km] | ${route.TOTAL_LENGTH}<br>Time   [min] | ${route.TOTAL_TIME}</span>
                 <span id="route-status-${route.ROUTE_ID}" class="${routeStatus}">${routeStatus}</span>
             `;
-            routeElement.addEventListener('click', function() { displayRouteDetails(route.ROUTE_ID) });
+
+            routeElement.addEventListener('click', function() {
+                document.querySelectorAll('.route-info').forEach(element => {
+                    element.style.color = '';
+                });
+                routeElement.style.color = 'red';
+                document.querySelectorAll('.route-info.selected').forEach(element => {
+                    element.classList.remove('selected');
+                });
+                routeElement.classList.add('selected');
+                displayRouteDetails(route.ROUTE_ID, route.NAME);
+            });
 
             routeCatalogue.appendChild(routeElement);
         })

@@ -13,6 +13,9 @@
     padding: 0px 20px;
     border-right: solid 5px black;
 }
+#route-catalogue li:hover{
+    cursor: pointer;
+}
 .route-info {
     background-color: #ddd;
     padding: 5px 10px;
@@ -39,6 +42,9 @@
 }
 .route-info:hover {
     background-color: #ccc;
+}
+.route.selected {
+    color: red;
 }
 
 #filters-form {
@@ -95,6 +101,31 @@ button:hover {
 
 #details-panel {
     width: 100%;
+    padding: 10px;
     flex: 1;
     border-top: solid 5px black;
+    background-color: #ddd;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.inline-list {
+    display: flex;
+    flex-wrap: wrap; /* Aby elementy zawijały się w nowej linii, jeśli jest zbyt mało miejsca */
+    gap: 10px; /* Odstęp między elementami */
+}
+
+.details-panel h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.details-panel ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.details-panel li {
+    color: #666;
+    padding: 5px 0;
 }

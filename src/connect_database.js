@@ -253,6 +253,40 @@ function getStretchElements(stretchId, callback) {
     });
 }
 
+function getRouteStations(routeId, callback) {
+    const db = connect();
+    const query = 'SELECT DISTINCT s.STATION_ID, s.NAME FROM STATION s\
+    JOIN STRETCH st ON s.STATION_ID = st.START_STATION_FK OR s.STATION_ID = st.END_STATION_FK\
+    JOIN ROUTE_STRETCH rs ON st.STRETCH_ID = rs.STRETCH_ID\
+    WHERE rs.ROUTE_ID = ?';
+    db.query(query, [routeId], (err, results) => {
+        if (err) {
+            console.error('Error selecting route:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
+function getRouteCapsules(routeId, callback) {
+    const db = connect();
+    const query = 'SELECT c.CAPSULE_ID, c.NAME FROM CAPSULE c\
+    JOIN ROUTE_CAPSULE rc ON c.CAPSULE_ID = rc.CAPSULE_ID WHERE rc.ROUTE_ID = ?';
+    db.query(query, [routeId], (err, results) => {
+        if (err) {
+            console.error('Error selecting route:', err);
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+
+        db.end();
+    });
+}
+
 
 module.exports = {
     connect,
@@ -267,6 +301,7 @@ module.exports = {
     assignCapsule,
     updateInfrastructure,
     getStretchElements,
-    unassignCapsule
-
+    unassignCapsule,
+    getRouteStations,
+    getRouteCapsules
 };

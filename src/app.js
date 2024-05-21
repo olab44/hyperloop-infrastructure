@@ -4,7 +4,7 @@ const path = require("path");
 
 const { getAllRoutes, getFilteredRoutes, getAllStretches, getAllMalfunctions, getMalfunctionsByRoute,
         addRoute, deleteRoute, assignCapsule, updateInfrastructure, getStretchElements,
-        getCapsules, unassignCapsule} = require('./connect_database');
+        getCapsules, unassignCapsule, getRouteStations, getRouteCapsules} = require('./connect_database');
 
 const app = express();
 
@@ -151,6 +151,33 @@ app.post('/stretch-ie', (req, res) => {
         }
     });
 });
+
+app.get('/route-stations/:routeId', (req, res) => {
+    const routeId = req.params.routeId;
+
+    getRouteStations(routeId, (err, route) => {
+        if (err) {
+            console.error('Error fetching route:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(route);
+        }
+    });
+});
+
+app.get('/route-capsules/:routeId', (req, res) => {
+    const routeId = req.params.routeId;
+
+    getRouteCapsules(routeId, (err, route) => {
+        if (err) {
+            console.error('Error fetching route:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(route);
+        }
+    });
+});
+
 
 const PORT = 4000;
 app.listen(PORT, () => {
