@@ -33,7 +33,7 @@ function displayStretchIE(stretch_ie) {
     stretch_ie.forEach(ie => {
         const ieElement = document.createElement('li');
         ieElement.classList.add('ie');
-        const ieStatus = ie.STATUS == 'A' ? 'Functional' : 'Out-Of-Order';
+        const ieStatus = ie.STATUS == 'F' ? 'Functional' : 'Out-Of-Order';
         ieElement.innerHTML =  `
             <span>${ie.ELEMENT_ID} | ${ie.NAME}</span>
             <span class="${ieStatus}">${ieStatus}</span>
