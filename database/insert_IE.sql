@@ -21,21 +21,21 @@ VALUES
 INSERT INTO `INFRASTRUCTURE_ELEMENT` (`ELEMENT_ID`, `SELECTOR`, `NAME`, `STATUS`, `LATITUDE`, `LONGITUDE`, `STRETCH_FK`, `SIGNAL`, `LENGTH`, `HEIGHT`, `WIDTH`)
 VALUES
     (12, 'TUBING', 'Tubing 1', 'F', 51.990046, 17.650704, 3, NULL, 75, 2.5, 2.5),
-    (13, 'TUBING', 'Tubing 2', 'M', 52.4002, 16.9032, 3, NULL, 75, 2.5, 2.5),
-    (14, 'EXIT', 'Emergency Exit', 'M', 51.990046, 17.650704, 3, NULL, NULL, NULL, NULL),
-    (15, 'PYLON', 'Pylon 1', 'M', 51.990046, 17.650704, 3, NULL, NULL, 8, NULL),
-    (16, 'PYLON', 'Pylon 2', 'M', 52.4002, 16.9032, 3, NULL, NULL, 5, NULL),
-    (17, 'PORT', 'Port 1', 'M', 52.4002, 16.9032, 3, NULL, NULL, NULL, NULL);
+    (13, 'TUBING', 'Tubing 2', 'O', 52.4002, 16.9032, 3, NULL, 75, 2.5, 2.5),
+    (14, 'EXIT', 'Emergency Exit', 'O', 51.990046, 17.650704, 3, NULL, NULL, NULL, NULL),
+    (15, 'PYLON', 'Pylon 1', 'O', 51.990046, 17.650704, 3, NULL, NULL, 8, NULL),
+    (16, 'PYLON', 'Pylon 2', 'O', 52.4002, 16.9032, 3, NULL, NULL, 5, NULL),
+    (17, 'PORT', 'Port 1', 'O', 52.4002, 16.9032, 3, NULL, NULL, NULL, NULL);
 
 
 -- Stretch 4: Poznań-Gorzów Wielkopolski
 INSERT INTO `INFRASTRUCTURE_ELEMENT` (`ELEMENT_ID`, `SELECTOR`, `NAME`, `STATUS`, `LATITUDE`, `LONGITUDE`, `STRETCH_FK`, `SIGNAL`, `LENGTH`, `HEIGHT`, `WIDTH`)
 VALUES
-    (18, 'TUBING', 'Tubing 1', 'M', 52.4085, 16.9342, 4, NULL, 75, 3, 3),
-    (19, 'TUBING', 'Tubing 2', 'M', 52.7357, 15.2411, 4, NULL, 75, 3, 3),
-    (20, 'EXIT', 'Emergency Exit', 'M', 52.7357, 15.2411, 4, NULL, NULL, NULL, NULL),
-    (21, 'PYLON', 'Pylon 1', 'M', 52.4085, 16.9342, 4, NULL, NULL, 8, NULL),
-    (22, 'PYLON', 'Pylon 2', 'M', 52.7357, 15.2411, 4, NULL, NULL, 5, NULL),
+    (18, 'TUBING', 'Tubing 1', 'O', 52.4085, 16.9342, 4, NULL, 75, 3, 3),
+    (19, 'TUBING', 'Tubing 2', 'O', 52.7357, 15.2411, 4, NULL, 75, 3, 3),
+    (20, 'EXIT', 'Emergency Exit', 'O', 52.7357, 15.2411, 4, NULL, NULL, NULL, NULL),
+    (21, 'PYLON', 'Pylon 1', 'O', 52.4085, 16.9342, 4, NULL, NULL, 8, NULL),
+    (22, 'PYLON', 'Pylon 2', 'O', 52.7357, 15.2411, 4, NULL, NULL, 5, NULL),
     (23, 'PORT', 'Port 1', 'F', 52.7357, 15.2411, 4, NULL, NULL, NULL, NULL);
 
 -- Stretch 5: Gorzów Wielkopolski-Berlin
@@ -380,14 +380,14 @@ VALUES
 -- 10 recent malfunctions in 2024 that are not yet solved
 INSERT INTO `MALFUNCTION` (`ELEMENT_FK`, `MALFUNCTION_DATE`, `STATUS`, `REPAIR_DATE`)
 VALUES
-    (13, '2024-05-01 08:30:00', 'M', NULL),
-    (14, '2024-05-03 10:15:00', 'M', NULL),
-    (15, '2024-05-05 14:45:00', 'M', NULL),
-    (16, '2024-05-07 07:25:00', 'M', NULL),
-    (17, '2024-05-09 09:00:00', 'M', NULL),
-    (18, '2024-05-11 13:35:00', 'M', NULL),
-    (19, '2024-05-13 06:50:00', 'M', NULL),
-    (20, '2024-05-15 11:10:00', 'M', NULL),
-    (21, '2024-05-17 12:55:00', 'M', NULL),
-    (22, '2024-05-19 15:20:00', 'M', NULL);
+    (13, '2024-05-01 08:30:00', 'O', NULL),
+    (14, '2024-05-03 10:15:00', 'O', NULL),
+    (15, '2024-05-05 14:45:00', 'O', NULL),
+    (16, '2024-05-07 07:25:00', 'O', NULL),
+    (17, '2024-05-09 09:00:00', 'O', NULL),
+    (18, '2024-05-11 13:35:00', 'O', NULL),
+    (19, '2024-05-13 06:50:00', 'O', NULL),
+    (20, '2024-05-15 11:10:00', 'O', NULL),
+    (21, '2024-05-17 12:55:00', 'O', NULL),
+    (22, '2024-05-19 15:20:00', 'O', NULL);
 

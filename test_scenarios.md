@@ -63,8 +63,8 @@ Jedna kapsuła może być przypisana do wielu tras, a po jednej trasie może je�
 Przyciskiem UNASSIGN CAPSULE możemy wyczyścić przypisanie kapusły do trasy - w przypadku podania powiązanej pary ID przypisanie
 zostanie anulowane, w przeciwnym razie tabela przypisań nie ulegnie zmianie.
 + aktualizowanie stanu infrastruktury - wymagane jest wpisanie ID elementu oraz stanu w jakim ma się on znaleźć - pojedynczy znak.
-Akceptowalne stany to 'F' (Functional) oraz 'M' (Malfunctioning) - pilnowane przez bazę danych (CHECK CONSTRAINT) oraz przez aplikację.
-Aplikacja pozwala również na podanie małych liter 'f' oraz 'm', jednak podanie innego znaku poskutkuje otrzymaniem komunikatu o niepoprawnym stanie.
+Akceptowalne stany to 'F' (Functional) oraz 'O' (Out-Of-Order) - pilnowane przez bazę danych (CHECK CONSTRAINT) oraz przez aplikację.
+Aplikacja pozwala również na podanie małych liter 'f' oraz 'o', jednak podanie innego znaku poskutkuje otrzymaniem komunikatu o niepoprawnym stanie.
 W przypadku podania operacji zmiany zgodnej z obecnym stanem, nic się zmieni. Zmiana stanu na przeciwny pociąga za sobą uaktualnienie tabeli MALFUNCTIONS
 
 **W dolnej** po naciśnięciu odcinka z listy wyświetlą się o nim szczegółowe informacje: ID, nazwa stacji początkowej i końcowej,

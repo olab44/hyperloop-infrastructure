@@ -61,7 +61,7 @@ function getFilteredRoutes(minLength, maxLength, minTime, maxTime, ieSelectors, 
         query = query.concat("AND CalculateRouteTime(r.ROUTE_ID) <= ? ");
         filters.push(parseInt(maxTime, 10)) }
     if (ieSelectors.length > 0) {
-        query = query.concat("AND EXISTS(SELECT * FROM RouteIE rie WHERE rie.ROUTE_ID = r.ROUTE_ID AND rie.SELECTOR IN (?) AND rie.STATUS = 'M')");
+        query = query.concat("AND EXISTS(SELECT * FROM RouteIE rie WHERE rie.ROUTE_ID = r.ROUTE_ID AND rie.SELECTOR IN (?) AND rie.STATUS = 'O')");
         filters.push(ieSelectors) }
 
     db.query(query, filters, (err, results) => {
@@ -101,10 +101,10 @@ function getAllMalfunctions(callback) {
 function getMalfunctionsByRoute(callback){
     const db = connect();
 
-    const query = 'SELECT ROUTE_ID, NAME, COUNT(ELEMENT_ID) AS countedErrors\
+    const query = "SELECT ROUTE_ID, NAME, COUNT(ELEMENT_ID) AS countedErrors\
                    FROM RouteIE\
-                   WHERE STATUS = "B"\
-                   GROUP BY ROUTE_ID';
+                   WHERE STATUS = 'O'\
+                   GROUP BY ROUTE_ID";
 
     db.query(query, (err, results) => {
         if (err) {
@@ -216,7 +216,7 @@ function unassignCapsule(routeId, capsuleId, callback) {
 }
 
 function updateInfrastructure(elementId, newState, callback) {
-    const validStates = ['F', 'M'];
+    const validStates = ['F', 'O'];
     if (!validStates.includes(newState)) {
         return callback(new Error('Invalid state'), null);
     }

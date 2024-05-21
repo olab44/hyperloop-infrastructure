@@ -42,7 +42,7 @@ BEGIN
     DECLARE malfunction_record INT;
 
     SELECT COUNT(*) INTO malfunction_record FROM RouteIE
-    WHERE ROUTE_ID = routeID AND STATUS = 'M';
+    WHERE ROUTE_ID = routeID AND STATUS = 'O';
 
     IF malfunction_record > 0 THEN
         RETURN 0;
