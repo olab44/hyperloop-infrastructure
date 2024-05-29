@@ -22,16 +22,23 @@
         <div class="welcome-box">
           <h1>REPORTS</h1>
         </div>
+        <div class="filters">
+          <label for="start-date">Start Date:</label>
+          <input type="date" id="start-date" />
+
+          <label for="end-date">End Date:</label>
+          <input type="date" id="end-date" />
+
+          <label for="status-filter">Status:</label>
+          <select id="status-filter">
+            <option value="all">All</option>
+            <option value="ongoing">Ongoing</option>
+            <option value="finished">Fixed</option>
+          </select>
+
+          <button id="filter-button">Filter</button>
+        </div>
         <div class="catalogue">
-          <div>
-            <label for="start-date">Start Date:</label>
-            <input type="date" id="start-date" />
-
-            <label for="end-date">End Date:</label>
-            <input type="date" id="end-date" />
-
-            <button id="filter-button">Filter by date</button>
-          </div>
           <ul id="malfunctions-by-route"></ul>
           <ul id="malfunctions-by-month"></ul>
         </div>

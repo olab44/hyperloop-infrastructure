@@ -49,23 +49,33 @@ function displayRoutesWithMalfunctions(malfunctioningRoutes){
     });
 }
 
-function filterMalfunctionsByDate(malfunctions, startDate, endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+function filterMalfunctions(malfunctions, startDate, endDate, status) {
+    const start = startDate ? new Date(startDate) : null;
+    const end = endDate ? new Date(endDate) : null;
 
     return malfunctions.filter(malfunction => {
         const malfunctionDate = new Date(malfunction.mdate);
-        return (!startDate || malfunctionDate >= start) && (!endDate || malfunctionDate <= end);
+        const isWithinDateRange = (!start || malfunctionDate >= start) && (!end || malfunctionDate <= end);
+        const isStatusMatch = (status === "all") || 
+                              (status === "ongoing" && !malfunction.rdate) || 
+                              (status === "finished" && malfunction.rdate);
+
+        return isWithinDateRange && isStatusMatch;
     });
 }
 
-function fetchAndDisplayMalfunctions(startDate, endDate) {
+function fetchAndDisplayMalfunctions(startDate, endDate, status) {
     Promise.all([
         fetch('/malfunctions').then(response => response.json()),
         fetch('/malfunctions-by-routes').then(response => response.json())
     ]).then(([malfunctions, malfunctioningRoutes]) => {
-        const filteredMalfunctions = filterMalfunctionsByDate(malfunctions, startDate, endDate);
-        displayMalfunctions(filteredMalfunctions)
+        console.log('Fetched malfunctions:', malfunctions);
+        console.log('Fetched malfunctioning routes:', malfunctioningRoutes);
+
+        const filteredMalfunctions = filterMalfunctions(malfunctions, startDate, endDate, status);
+        console.log('Filtered malfunctions:', filteredMalfunctions);
+
+        displayMalfunctions(filteredMalfunctions);
         displayRoutesWithMalfunctions(malfunctioningRoutes);
     }).catch(error => {
         console.error('Error fetching/displaying malfunctions:', error);
@@ -75,7 +85,12 @@ function fetchAndDisplayMalfunctions(startDate, endDate) {
 document.getElementById('filter-button').addEventListener('click', () => {
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
-    fetchAndDisplayMalfunctions(startDate, endDate);
+    const status = document.getElementById('status-filter').value;
+
+    console.log('Filter parameters - Start Date:', startDate, 'End Date:', endDate, 'Status:', status);
+
+    fetchAndDisplayMalfunctions(startDate, endDate, status);
 });
 
-fetchAndDisplayMalfunctions();
+fetchAndDisplayMalfunctions(null, null, "all");
+

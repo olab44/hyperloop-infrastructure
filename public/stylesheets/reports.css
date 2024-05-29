@@ -40,3 +40,43 @@
     border: double black;
     border-width: 5px 0px;
 }
+
+#malfunctions-by-route {
+    list-style-type: none;
+    flex: 3;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding: 0px 20px;
+    border-right: solid 5px black;
+    flex: 1;
+}
+
+#malfunctions-by-month {
+    list-style-type: none;
+    flex: 3;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding: 0px 20px;
+    border-right: solid 5px black;
+    flex: 2;
+}
+
+.filters {
+    background-color: #ddd;
+    padding: 5px 10px;
+    width: 90%;
+    margin: 0 auto 10px;
+    border: double black;
+    border-width: 5px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.filters label {
+    margin-right: 5px;
+}
+
+.filters input, .filters select, .filters button {
+    margin-right: 10px;
+}
+
