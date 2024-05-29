@@ -56,8 +56,8 @@ function filterMalfunctions(malfunctions, startDate, endDate, status) {
     return malfunctions.filter(malfunction => {
         const malfunctionDate = new Date(malfunction.mdate);
         const isWithinDateRange = (!start || malfunctionDate >= start) && (!end || malfunctionDate <= end);
-        const isStatusMatch = (status === "all") || 
-                              (status === "ongoing" && !malfunction.rdate) || 
+        const isStatusMatch = (status === "all") ||
+                              (status === "ongoing" && !malfunction.rdate) ||
                               (status === "finished" && malfunction.rdate);
 
         return isWithinDateRange && isStatusMatch;
@@ -82,7 +82,8 @@ function fetchAndDisplayMalfunctions(startDate, endDate, status) {
     });
 }
 
-document.getElementById('filter-button').addEventListener('click', () => {
+document.getElementById('filter-button').addEventListener('click', (event) => {
+    event.preventDefault();
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
     const status = document.getElementById('status-filter').value;

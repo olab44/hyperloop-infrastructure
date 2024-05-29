@@ -3,15 +3,19 @@ form
     display: flex;
     flex-direction: column;
     padding: 5px;
+    margin-bottom: 20px;
 }
 
-input {
+input, select {
     border: 1px solid rgb(55, 180, 225);
     border-radius: 5px;
     padding: 0.5em 0.75em;
-    transition: border-color 0.2s, box-shadow 0.2s;
     height: 2vh;
     margin-bottom: 10px;
+}
+
+select {
+    height: 3vh;
 }
 
 input:focus {
@@ -32,7 +36,7 @@ button
 
 .filters
 {
-    padding: 10px 20px;
+    padding: 10px 30px;
     border-right: solid 5px black;
 }
 
@@ -97,24 +101,5 @@ button
     padding: 0px 20px;
     border-right: solid 5px black;
     flex: 2;
-}
-
-.filters {
-    background-color: #ddd;
-    padding: 5px 10px;
-    width: 90%;
-    margin: 0 auto 10px;
-    border: double black;
-    border-width: 5px;
-    box-sizing: border-box;
-    text-align: center;
-}
-
-.filters label {
-    margin-right: 5px;
-}
-
-.filters input, .filters select, .filters button {
-    margin-right: 10px;
 }
 
