@@ -62,3 +62,8 @@ h1 {
 .tabs li a:hover {
     background-color: #ccc;
 }
+
+button:hover, input:hover, select:hover
+{
+    cursor: pointer;
+}
