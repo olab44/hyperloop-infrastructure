@@ -1,3 +1,41 @@
+form
+{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+input {
+    border: 1px solid rgb(55, 180, 225);
+    border-radius: 5px;
+    padding: 0.5em 0.75em;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    height: 2vh;
+    margin-bottom: 10px;
+}
+
+input:focus {
+    outline: 0;
+}
+
+label
+{
+    color: #ddd;
+    margin-bottom:  2px;
+}
+
+button
+{
+    margin-top: 10px;
+    height: 3vh;
+}
+
+.filters
+{
+    padding: 10px 20px;
+    border-right: solid 5px black;
+}
+
 .catalogue {
     height: 100%;
     width: 100%;
