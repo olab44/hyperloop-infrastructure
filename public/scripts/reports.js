@@ -49,17 +49,33 @@ function displayRoutesWithMalfunctions(malfunctioningRoutes){
     });
 }
 
+function filterMalfunctionsByDate(malfunctions, startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
 
-function fetchAndDisplayMalfunctions() {
+    return malfunctions.filter(malfunction => {
+        const malfunctionDate = new Date(malfunction.mdate);
+        return (!startDate || malfunctionDate >= start) && (!endDate || malfunctionDate <= end);
+    });
+}
+
+function fetchAndDisplayMalfunctions(startDate, endDate) {
     Promise.all([
         fetch('/malfunctions').then(response => response.json()),
         fetch('/malfunctions-by-routes').then(response => response.json())
     ]).then(([malfunctions, malfunctioningRoutes]) => {
-        displayMalfunctions(malfunctions)
+        const filteredMalfunctions = filterMalfunctionsByDate(malfunctions, startDate, endDate);
+        displayMalfunctions(filteredMalfunctions)
         displayRoutesWithMalfunctions(malfunctioningRoutes);
     }).catch(error => {
         console.error('Error fetching/displaying malfunctions:', error);
     });
 }
+
+document.getElementById('filter-button').addEventListener('click', () => {
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    fetchAndDisplayMalfunctions(startDate, endDate);
+});
 
 fetchAndDisplayMalfunctions();
