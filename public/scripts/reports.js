@@ -93,5 +93,10 @@ document.getElementById('filter-button').addEventListener('click', (event) => {
     fetchAndDisplayMalfunctions(startDate, endDate, status);
 });
 
+
+document.getElementById('filters-form').addEventListener('reset', function(e) {
+    fetchAndDisplayMalfunctions(null, null, "all");
+});
+
 fetchAndDisplayMalfunctions(null, null, "all");
 
