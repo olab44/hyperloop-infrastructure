@@ -49,17 +49,49 @@ function displayRoutesWithMalfunctions(malfunctioningRoutes){
     });
 }
 
+function filterMalfunctions(malfunctions, startDate, endDate, status) {
+    const start = startDate ? new Date(startDate) : null;
+    const end = endDate ? new Date(endDate) : null;
 
-function fetchAndDisplayMalfunctions() {
+    return malfunctions.filter(malfunction => {
+        const malfunctionDate = new Date(malfunction.mdate);
+        const isWithinDateRange = (!start || malfunctionDate >= start) && (!end || malfunctionDate <= end);
+        const isStatusMatch = (status === "all") ||
+                              (status === "ongoing" && !malfunction.rdate) ||
+                              (status === "finished" && malfunction.rdate);
+
+        return isWithinDateRange && isStatusMatch;
+    });
+}
+
+function fetchAndDisplayMalfunctions(startDate, endDate, status) {
     Promise.all([
         fetch('/malfunctions').then(response => response.json()),
         fetch('/malfunctions-by-routes').then(response => response.json())
     ]).then(([malfunctions, malfunctioningRoutes]) => {
-        displayMalfunctions(malfunctions)
+        console.log('Fetched malfunctions:', malfunctions);
+        console.log('Fetched malfunctioning routes:', malfunctioningRoutes);
+
+        const filteredMalfunctions = filterMalfunctions(malfunctions, startDate, endDate, status);
+        console.log('Filtered malfunctions:', filteredMalfunctions);
+
+        displayMalfunctions(filteredMalfunctions);
         displayRoutesWithMalfunctions(malfunctioningRoutes);
     }).catch(error => {
         console.error('Error fetching/displaying malfunctions:', error);
     });
 }
 
-fetchAndDisplayMalfunctions();
+document.getElementById('filter-button').addEventListener('click', (event) => {
+    event.preventDefault();
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+    const status = document.getElementById('status-filter').value;
+
+    console.log('Filter parameters - Start Date:', startDate, 'End Date:', endDate, 'Status:', status);
+
+    fetchAndDisplayMalfunctions(startDate, endDate, status);
+});
+
+fetchAndDisplayMalfunctions(null, null, "all");
+

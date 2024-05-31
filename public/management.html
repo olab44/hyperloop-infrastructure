@@ -25,19 +25,21 @@
         <main class="management">
           <ul id="available-stretches-list"></ul>
           <section class="operations">
-            <h2>Create New Route</h2>
-            <form id="add-route-form">
-              <input
-                type="text"
-                id="route-name"
-                placeholder="Route Name"
-                maxlength="20"
-                required
-              />
-              <ol id="chosen-stretches-list"></ol>
-              <button type="submit">ADD ROUTE</button>
-              <button type="reset">CLEAR</button>
-            </form>
+            <article class="operation">
+              <h2>Create New Route</h2>
+              <form id="add-route-form">
+                <input
+                  type="text"
+                  id="route-name"
+                  placeholder="Route Name"
+                  maxlength="20"
+                  required
+                />
+                <ol id="chosen-stretches-list"></ol>
+                <button type="submit">ADD ROUTE</button>
+                <button type="reset">CLEAR</button>
+              </form>
+            </article>
           </section>
           <section class="operations">
             <article class="operation">
@@ -85,13 +87,10 @@
                   placeholder="Element ID"
                   required
                 />
-                <input
-                  type="text"
-                  id="new-state"
-                  placeholder="New State"
-                  maxlength="1"
-                  required
-                />
+                <select id="new-state">
+                  <option value="f">Functional</option>
+                  <option value="o">Out-of-order</option>
+                </select>
                 <button type="submit">UPDATE STATE</button>
               </form>
             </article>

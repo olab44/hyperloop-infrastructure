@@ -31,6 +31,13 @@ input:focus {
     box-shadow: 0 0 30px rgba(47, 17, 60, 0.5);
 }
 
+select{
+    border: 1px solid rgb(55, 180, 225);
+    border-radius: 5px;
+    padding: 0.5em 0.75em;
+    margin: 5px;
+}
+
 #available-stretches-list {
     flex: 1;
     border-right: solid 5px black;

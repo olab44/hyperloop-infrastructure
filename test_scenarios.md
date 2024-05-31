@@ -1,6 +1,7 @@
 # Scenariusze Testowe - opis działania
 
 ## Nawigacja
+
 Po otwarciu aplikacji znajdujemy się w menu głównym.
 
 W menu oraz na każdej z podstron znajduje się panel do nawigacji:
@@ -10,6 +11,7 @@ W menu oraz na każdej z podstron znajduje się panel do nawigacji:
 - naciśnięcie guzika aktualnej strony pozwala ją odświeżyć
 
 ## Podstrona Route Catalogue
+
 Wydzielone 3 sekcje:
 
 **W lewej** znajdują się istniejące trasy wraz z ich cechami (id, nazwa, długość w km, czas w minutach).
@@ -42,6 +44,7 @@ jej nazwa, stacje w kolejności przez które ona przebiega (numer w kolejnośći
 W przypadku braku przypisanych kapsuł to pole jest puste.
 
 ## Podstrona Management
+
 Wydzielone 4 sekcje:
 
 **W lewej** jest lista wszystkich odcinków z jednej stacji do drugiej (opisane numerem ID oraz miastem początkowym i końcowym).
@@ -56,11 +59,16 @@ Maksymalna długość to 20 znaków - narzucone przez bazę danych, pilnowane pr
 
 Musimy też wybrać odcinki, z których droga ma się składać - przynajmniej jeden. W tym celu naciskamy podwójnie na wybrany odcinek.
 Zostaje on przeniesiony do sekcji dodawania. Następne odcinki muszą mieć stację początkową zgodną ze stacją końcową poprzedniego.
+<<<<<<< HEAD
 
 Integralność danych jest wymuszana przez aplikację - wszystkie odcinki które nie spełniają tego warunku zostaną wszarzone i wciśnięcie ich
 nie dodaje ich do tworzonej trasy.
 
 Jeżeli nazwaliśmy drogę oraz wybraliśmy minimum jeden odcinek to przycisk
+=======
+Integralność danych jest wymuszana przez aplikację - wszystkie odcinki które nie spełniają tego warunku zostaną wyszarzone i wciśnięcie ich
+nie dodaje ich do tworzonej trasy. Jeżeli nazwaliśmy drogę oraz wybraliśmy minimum jeden odcinek to przycisk
+>>>>>>> b9489be568a623c129c966388ef117fd02919277
 ADD ROUTE utworzy trasę - numer ID przydzielany automatycznie przez bazę danych (AUTO INCREMENT) - inaczej pojawi się komunikat o błędzie.
 
 Po dodaniu trasy panel zostaje wyczyszczony. Panel możemy też wyczyścić wciskając na przycisk CLEAR.
@@ -70,6 +78,7 @@ Obecnie utworzone trasy można zobaczyć na podstronie Route Catalogue.
 **W prawej** można wykonać następujące operacje:
 
 - usuwanie tras - wpisujemy ID wybranej trasy i po naciśnięciu przycisku DELETE ROUTE zostaje ona usunięta.
+<<<<<<< HEAD
 Aplikacja pozwala wprowadzić liczby całkowite. Jeżeli podamy nieistniejące ID to otrzymamy stosowny komunikat, że nie ma takiej trasy.
 
 - przypisywanie kapsuł do tras - dostępna jest lista kapsuł (ID, nazwa oraz typ). Listę możemy przewijać. Pod listą możemy
@@ -94,6 +103,21 @@ Akceptowalne stany to 'F' (Functional) oraz 'O' (Out-Of-Order) - pilnowane przez
 Aplikacja pozwala również na podanie małych liter 'f' oraz 'o', jednak podanie innego znaku poskutkuje otrzymaniem komunikatu o niepoprawnym stanie.
 
 W przypadku podania operacji zmiany zgodnej z obecnym stanem, nic się zmieni. Zmiana stanu na przeciwny pociąga za sobą uaktualnienie tabeli MALFUNCTIONS
+=======
+  Aplikacja pozwala wprowadzić liczby całkowite. Jeżeli podamy nieistniejące ID to otrzymamy stosowny komunikat, że nie ma takiej trasy.
+- przypisywanie kapsuł do tras - dostępna jest lista kapsuł (ID, nazwa oraz typ). Listę możemy przewijać. Pod listą możemy
+  wpisać ID kapsuły oraz ID trasy. Aplikacja pilnuje, aby były to liczby całkowite.
+  Po podaniu obu ID możemy nacisnąć Przycisk ASSIGN CAPSULE, aby przypisać kapsułę do trasy:
+  Jeżeli oba ID rzeczywiście istnieją w bazie danych to kaspuła zostanie przypisana,
+  w przeciwnym przypadku pojawi się komunikat o błędzie - w bazie danych muszą zgadzać się klucze obce.
+  Jeżeli dana kapsuła już jest przypisana do danej trasy, przypisanie nie ulegnie zmianie.
+  Jedna kapsuła może być przypisana do wielu tras, a po jednej trasie może jeździć wiele kapsuł.
+  Przyciskiem UNASSIGN CAPSULE możemy wyczyścić przypisanie kapusły do trasy - w przypadku podania powiązanej pary ID przypisanie
+  zostanie anulowane, w przeciwnym razie tabela przypisań nie ulegnie zmianie.
+- aktualizowanie stanu infrastruktury - wymagane jest wpisanie ID elementu oraz wybranie z listy stanu w jakim ma się on znaleźć.
+  Można wybrać opcję Functional lub Out-Of-Order - pilnowane przez bazę danych (CHECK CONSTRAINT) oraz przez aplikację.
+  W przypadku podania operacji zmiany zgodnej z obecnym stanem, nic się zmieni. Zmiana stanu na przeciwny pociąga za sobą uaktualnienie tabeli MALFUNCTIONS
+>>>>>>> b9489be568a623c129c966388ef117fd02919277
 
 **W dolnej** po naciśnięciu odcinka z listy wyświetlą się o nim szczegółowe informacje: ID, nazwa stacji początkowej i końcowej,
 długość oraz maksymalna prędkość.
@@ -107,6 +131,7 @@ Jednocześnie mogą być wyświetlana informacje o jednym połączeniu na raz. W
 nacisnąć na inny odcinek z listy.
 
 ## Podstrona Reports
+
 Wydzielone 2 sekcje:
 
 **W lewej** jest lista tras, na których znajdują się elementy wymagające naprawy.
